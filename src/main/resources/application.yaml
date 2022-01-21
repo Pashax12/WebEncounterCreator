@@ -1,0 +1,11 @@
+spring.datasource:
+  url: jdbc:postgresql://localhost:5432/EncounterBot
+  username: postgres
+  password: root
+  driver-class-name: org.postgresql.Driver
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
