@@ -1,4 +1,4 @@
-package by.paul.springbootrestservice.monster.service;
+package by.paul.springbootrestservice.monster.service.library;
 
 import by.paul.springbootrestservice.monster.dao.MonsterRepository;
 import by.paul.springbootrestservice.monster.entity.Monster;

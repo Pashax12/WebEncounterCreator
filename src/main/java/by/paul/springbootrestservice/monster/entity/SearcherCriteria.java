@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class SearcherCriteria {
+  private String monsterName;
   private String monsterType;
   private String monsterSize;
   private int minMonsterChallenge;
