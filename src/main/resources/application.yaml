@@ -9,3 +9,6 @@ spring:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
+url:
+  path:
+    monsterLibrary: http://localhost:8080/MonsterLibrary/getMonster/

@@ -13,8 +13,11 @@ public class MonsterLibraryService {
 
   private final MonsterRepository monsterRepository;
 
-  public List<Monster> getMonsterFromLibrary(SearcherCriteria searcherCriteria){
+  /*public List<Monster> getMonsterFromLibrary(SearcherCriteria searcherCriteria){
     return monsterRepository.findAllByParams("");
-  }
+  }*/
 
+  public Monster getMonsterFromLibrary(String monsterName){
+    return monsterRepository.findByMonsterName(monsterName);
+  }
 }

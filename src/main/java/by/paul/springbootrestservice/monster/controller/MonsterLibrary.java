@@ -4,6 +4,8 @@ import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.entity.SearcherCriteria;
 import by.paul.springbootrestservice.monster.service.library.MonsterLibraryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,13 @@ public class MonsterLibrary {
 
   private final MonsterLibraryService monsterLibraryService;
 
-  @PostMapping("/postMonsters")
+ /* @PostMapping("/postMonsters")
   public List<Monster> getMonsters(@RequestBody SearcherCriteria searcherCriteria) {
     return monsterLibraryService.getMonsterFromLibrary(searcherCriteria);
+  }*/
+  @GetMapping("/getMonster/{path}")
+  public Monster getMonsterByName(@PathVariable String path) {
+    return monsterLibraryService.getMonsterFromLibrary(path);
   }
+
 }

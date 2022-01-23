@@ -1,9 +1,8 @@
 package by.paul.springbootrestservice.monster.controller;
 
-import by.paul.springbootrestservice.monster.entity.Monster;
-import by.paul.springbootrestservice.monster.entity.SearcherCriteria;
-import by.paul.springbootrestservice.monster.service.generator.EncounterGeneratorService;
-import java.util.ArrayList;
+import by.paul.springbootrestservice.monster.entity.EncounterBuilder;
+import by.paul.springbootrestservice.monster.entity.dto.GeneratedMonsterDTO;
+import by.paul.springbootrestservice.monster.service.generator.GeneratorService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,14 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/EncounterGenerator")
 @RequiredArgsConstructor
-@RequestMapping("/MonsterLibrary")
 public class EncounterGenerator {
-  private final EncounterGeneratorService encounterGeneratorService;
 
-  @PostMapping("/postMonsters")
-  public List<Monster> createEncounter(@RequestBody SearcherCriteria searcherCriteria) {
-    return new ArrayList<>();
+  private final GeneratorService generatorService;
+
+  @PostMapping("/createEncounter")
+  public List<GeneratedMonsterDTO> createEncounter(@RequestBody EncounterBuilder encounterBuilder) {
+    return generatorService.getGeneratedMonsters(encounterBuilder);
   }
 
 }

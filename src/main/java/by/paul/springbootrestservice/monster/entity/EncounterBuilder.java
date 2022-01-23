@@ -1,5 +1,6 @@
 package by.paul.springbootrestservice.monster.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -7,12 +8,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Data
-@Scope("singleton")
 @Component
 public class EncounterBuilder {
 
+  @JsonProperty("monsterOwner")
+  private String monsterOwner;
+  @JsonProperty("difficulty")
   private String difficulty;
-  private List<String> playersLevel = new ArrayList<>();
+  @JsonProperty("playersLevel")
+  private List<String> playersLevel;
+  @JsonProperty("mixedTypes")
   private boolean mixedTypes;
 
   public int getHoleFightExp() {
@@ -29,7 +34,5 @@ public class EncounterBuilder {
     return levels;
   }
 
-  public void addPlayer(String player) {
-    playersLevel.add(player);
-  }
+
 }
