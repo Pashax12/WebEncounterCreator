@@ -3,6 +3,10 @@ package by.paul.springbootrestservice.monster.service.library.specification;
 import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.entity.Monster_;
 import by.paul.springbootrestservice.monster.entity.SearcherCriteria;
+import java.util.List;
+
+import java.util.ArrayList;
+import javax.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -15,47 +19,45 @@ public class CriteriaSpecification {
 
     return (root, query, criteriaBuilder) -> {
 
+      List<Predicate> predicateList = new ArrayList<>();
+
       if (criteria.getMonsterType() != null) {
-        query = query.where(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterType() + "%"));
+        predicateList.add(criteriaBuilder
+            .like(root.get(Monster_.MONSTER_META), "%"+criteria.getMonsterType()+"%"));
       }
-      if (criteria.getMonsterSize() != null) {
-        query = query.where(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), criteria.getMonsterType() + "%"));
-      }
-      if (criteria.getMinMonsterChallenge() >= 0) {
-        query = query.where(criteriaBuilder
-            .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), criteria.getMinMonsterChallenge()));
-      }
-      if(criteria.getMaxMonsterChallenge() <= 30 ){
-        query = query.where(criteriaBuilder
-            .greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), criteria.getMaxMonsterChallenge()));
+       if (criteria.getMonsterSize() != null) {
+         predicateList.add(criteriaBuilder
+            .like(root.get(Monster_.MONSTER_META), criteria.getMonsterSize() + '%'));
       }
       if (criteria.getMonsterOutlook() != null) {
-        query = query.where(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterType()));
+        predicateList.add(criteriaBuilder
+            .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterOutlook()));
       }
-      if (criteria.getMinMonsterSpeed() >= 0) {
-        query = query.where(criteriaBuilder
-            .lessThanOrEqualTo(root.get(Monster_.MONSTER_SPEED), criteria.getMinMonsterSpeed()));
+      if (criteria.getMinMonsterChallenge() >= 0) {
+        predicateList.add(criteriaBuilder
+            .greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), criteria.getMinMonsterChallenge()));
       }
-      if(criteria.getMaxMonsterSpeed() <= 200){
-        query = query.where(criteriaBuilder
-            .greaterThanOrEqualTo(root.get(Monster_.MONSTER_SPEED), criteria.getMaxMonsterSpeed()));
+      if(criteria.getMaxMonsterChallenge() <= 155000 ){
+        predicateList.add(criteriaBuilder
+            .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), criteria.getMaxMonsterChallenge()));
       }
+
       if (!criteria.isSource()) {
-        query = query.where(criteriaBuilder
-            .notLike(root.get(Monster_.MONSTER_OWNER), "Homebrew %"));
+        predicateList.add(criteriaBuilder
+            .equal(root.get(Monster_.MONSTER_OWNER), "admin"));
       }
-      if (!criteria.isLegendaryAction()) {
-        query = query.where(criteriaBuilder
-            .equal(root.get(Monster_.MONSTER_LEGENDARY_ACTIONS), null));
+      if (criteria.isLegendaryAction()) {
+        predicateList.add(criteriaBuilder
+            .isNotNull(root.get(Monster_.MONSTER_LEGENDARY_ACTIONS)));
       }
-      if (!criteria.isSpecialSkills()) {
-        query = query.where(criteriaBuilder
-            .equal(root.get(Monster_.MONSTER_SKILLS), null));
+      if (criteria.isSpecialSkills()) {
+        predicateList.add(criteriaBuilder
+            .isNotNull(root.get(Monster_.MONSTER_SKILLS)));
       }
-      return query.getGroupRestriction();//Посмотреть отличия
+
+      Predicate[] p = new Predicate[predicateList.size()];
+      Predicate predicate = criteriaBuilder.and(predicateList.toArray(p));
+      return predicate;//Посмотреть отличия
     };
 
   }

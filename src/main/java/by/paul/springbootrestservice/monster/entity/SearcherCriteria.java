@@ -23,9 +23,4 @@ public class SearcherCriteria {
   private boolean legendaryAction;
   @JsonProperty("specialSkills")
   private boolean specialSkills;
-  @JsonProperty("minMonsterSpeed")
-  private int minMonsterSpeed;
-  @JsonProperty("maxMonsterSpeed")
-  private int maxMonsterSpeed;
-
 }
