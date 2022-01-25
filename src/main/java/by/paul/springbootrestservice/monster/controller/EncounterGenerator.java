@@ -19,7 +19,9 @@ public class EncounterGenerator {
 
   @PostMapping("/createEncounter")
   public List<GeneratedMonsterDTO> createEncounter(@RequestBody EncounterBuilder encounterBuilder) {
+
     return generatorService.getGeneratedMonsters(encounterBuilder);
+
   }
 
 }

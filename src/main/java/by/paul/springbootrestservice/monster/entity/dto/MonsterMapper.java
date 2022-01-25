@@ -10,7 +10,7 @@ public interface MonsterMapper {
 
   MonsterMapper INSTANCE = Mappers.getMapper(MonsterMapper.class);
 
-  @Mapping(target = "monsterPath", source = "monsterPic")
+  @Mapping(target = "monsterPath", expression = "java(\"http://localhost:8080/MonsterLibrary/getMonster/\" + monster.getMonsterName())")
   GeneratedMonsterDTO monsterToMonsterDto(Monster monster);
 
 }

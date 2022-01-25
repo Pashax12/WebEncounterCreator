@@ -1,14 +1,15 @@
-package by.paul.springbootrestservice.monster.dao;
+package by.paul.springbootrestservice.monster.repository;
 
 import by.paul.springbootrestservice.monster.entity.Monster;
 import java.util.List;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-public interface MonsterRepository extends CrudRepository<Monster, Long> {
+public interface MonsterRepository extends CrudRepository<Monster, Long>,
+    JpaSpecificationExecutor<Monster> {
 
-  //@Query(value = "SELECT * FROM monster_list where ?1", nativeQuery = true)
-  //List<Monster> findAllByParams(String param);//переделать
+  List<Monster> findAll( Specification<Monster> spec );//Page - почитать
 
   List<Monster> findAllByMonsterChallengeBetweenAndMonsterOwnerOrderByMonsterId(
       int monsterChallenge, int monsterChallenge2, String monsterOwner);
