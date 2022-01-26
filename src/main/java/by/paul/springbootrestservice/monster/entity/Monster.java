@@ -1,4 +1,4 @@
-package by.paul.springbootrestservice.monster.entity;
+package by.paul.springbootrestservice.monsterService.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;

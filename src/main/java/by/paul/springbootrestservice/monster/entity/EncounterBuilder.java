@@ -1,10 +1,9 @@
-package by.paul.springbootrestservice.monster.entity;
+package by.paul.springbootrestservice.monsterService.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Data

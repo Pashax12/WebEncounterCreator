@@ -41,7 +41,6 @@ public class CriteriaSpecification {
         predicateList.add(criteriaBuilder
             .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), criteria.getMaxMonsterChallenge()));
       }
-
       if (!criteria.isSource()) {
         predicateList.add(criteriaBuilder
             .equal(root.get(Monster_.MONSTER_OWNER), "admin"));
@@ -55,9 +54,7 @@ public class CriteriaSpecification {
             .isNotNull(root.get(Monster_.MONSTER_SKILLS)));
       }
 
-      Predicate[] p = new Predicate[predicateList.size()];
-      Predicate predicate = criteriaBuilder.and(predicateList.toArray(p));
-      return predicate;//Посмотреть отличия
+      return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
     };
 
   }

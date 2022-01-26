@@ -1,6 +1,6 @@
-package by.paul.springbootrestservice.monster.repository;
+package by.paul.springbootrestservice.monsterService.repository;
 
-import by.paul.springbootrestservice.monster.entity.Monster;
+import by.paul.springbootrestservice.monsterService.entity.Monster;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
