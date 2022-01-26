@@ -1,4 +1,4 @@
-package by.paul.springbootrestservice.monster.service.library.specification;
+package by.paul.springbootrestservice.monster.service;
 
 import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.entity.Monster_;

@@ -1,4 +1,4 @@
-package by.paul.springbootrestservice.monsterService.entity;
+package by.paul.springbootrestservice.monster.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Column;
@@ -7,14 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
-
 import org.springframework.stereotype.Component;
 
 @Data
 @Entity
 @Table(name = "monster_list")
 @Component
+@NotNull
 public class Monster {
 
   @Id
@@ -22,9 +26,12 @@ public class Monster {
   private Long monsterId;
   @Column
   @JsonProperty("name")
+  @NotNull(message = "MonsterName can't be null")
+  @NotEmpty(message = "MonsterName can't be blank")
   private String monsterName;
   @Column
   @JsonProperty("meta")
+  @NotEmpty(message = "monsterMeta can't be blank")
   private String monsterMeta;
   @Column
   @JsonProperty("Armor Class")
@@ -87,6 +94,8 @@ public class Monster {
   private String monsterLanguages;
   @Column
   @JsonProperty("Challenge")
+  @Min(value = 0, message = "MonsterChallenge not be less than 18")
+  @Max(value = 155000, message = "MonsterChallenge not be greater than 150")
   private int monsterChallenge;
   @Column
   @JsonProperty("Traits")
@@ -101,6 +110,7 @@ public class Monster {
   @JsonProperty("img_url")
   private String monsterPic;
   @Column
+  @NotEmpty(message = "monsterOwner can't be blank")
   private String monsterOwner;
 
 }

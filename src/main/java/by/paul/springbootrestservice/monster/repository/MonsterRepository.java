@@ -1,6 +1,6 @@
-package by.paul.springbootrestservice.monsterService.repository;
+package by.paul.springbootrestservice.monster.repository;
 
-import by.paul.springbootrestservice.monsterService.entity.Monster;
+import by.paul.springbootrestservice.monster.entity.Monster;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface MonsterRepository extends CrudRepository<Monster, Long>,
     JpaSpecificationExecutor<Monster> {
 
+  Boolean existsByMonsterNameAndMonsterOwner(String monsterName, String monsterOwner);
   List<Monster> findAll( Specification<Monster> spec );//Page - почитать
 
   List<Monster> findAllByMonsterChallengeBetweenAndMonsterOwnerOrderByMonsterId(

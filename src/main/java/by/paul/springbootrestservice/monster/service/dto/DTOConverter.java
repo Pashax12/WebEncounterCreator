@@ -1,4 +1,4 @@
-package by.paul.springbootrestservice.monster.entity.dto;
+package by.paul.springbootrestservice.monster.service.dto;
 
 import by.paul.springbootrestservice.monster.entity.Monster;
 import java.util.List;
