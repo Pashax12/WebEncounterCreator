@@ -14,7 +14,7 @@ public interface MonsterMapper {
   GeneratedMonsterDTO monsterToMonsterDto(Monster monster);
 
   @AfterMapping
-  default void setBookAuthor(@MappingTarget GeneratedMonsterDTO generatedMonsterDTO,
+  default void setЬMonsterPath(@MappingTarget GeneratedMonsterDTO generatedMonsterDTO,
       Monster monster) {
 
     if (generatedMonsterDTO.monsterName.contains(" ")) {

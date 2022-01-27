@@ -8,6 +8,7 @@ import by.paul.springbootrestservice.monster.service.MonsterService;
 import by.paul.springbootrestservice.monster.service.dto.GeneratedMonsterDTO;
 import java.util.List;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,24 +31,24 @@ public class MonsterController {
   }
 
   @PostMapping("/EncounterGenerator/createEncounter")
-  public List<GeneratedMonsterDTO> createEncounter(
-      @RequestBody @Valid EncounterBuilder encounterBuilder) {
+  public List<GeneratedMonsterDTO> createEncounter(@Valid
+  @RequestBody EncounterBuilder encounterBuilder) {
     return monsterService.getGeneratedMonsters(encounterBuilder);
   }
 
   @PostMapping("/MonsterLibrary/postMonsters")
-  public List<Monster> getMonsters(@RequestBody @Valid SearcherCriteria searcherCriteria) {
+  public List<Monster> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
     return monsterService.getMonsterFromLibrary(searcherCriteria);
   }
 
   @GetMapping("/MonsterLibrary/getMonster/{path}")
-  public Monster getMonsterByName(@PathVariable @Valid String path) {
+  public Monster getMonsterByName(@PathVariable @Valid @NotBlank String path) {
     return monsterService.getMonsterFromLibrary(path);
   }
 
   @GetMapping("/MonsterLibrary/searchMonster")
-  public List<GeneratedMonsterDTO> getAllAuthorMonster(
-      @RequestParam(value = "author") @Valid String authorName) {
+  public List<GeneratedMonsterDTO> getAllAuthorMonster(@Valid @NotBlank
+  @RequestParam(value = "author", defaultValue = "admin") String authorName) {
     return monsterService.getAllAuthorMonster(authorName);
   }
 

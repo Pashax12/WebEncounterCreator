@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +13,16 @@ import org.springframework.stereotype.Component;
 public class EncounterBuilder {
 
   @JsonProperty("monsterOwner")
-  @NotBlank
+  @NotNull(message = "monsterOwner can't be null")
   private String monsterOwner;
   @JsonProperty("difficulty")
-  @NotBlank
+  @NotNull(message = "monsterOwner can't be null")
   private String difficulty;
   @JsonProperty("playersLevel")
-  @NotBlank
+  @NotNull(message = "monsterOwner can't be null")
   private List<String> playersLevel;
   @JsonProperty("mixedTypes")
-  @NotBlank
+  @NotNull(message = "monsterOwner can't be null")
   private boolean mixedTypes;
 
   public int getHoleFightExp() {

@@ -27,11 +27,12 @@ public class Monster {
   @Column
   @JsonProperty("name")
   @NotNull(message = "MonsterName can't be null")
-  @NotEmpty(message = "MonsterName can't be blank")
+  @NotEmpty(message = "MonsterName can't be empty")
   private String monsterName;
   @Column
   @JsonProperty("meta")
-  @NotEmpty(message = "monsterMeta can't be blank")
+  @NotNull(message = "monsterMeta can't be null")
+  @NotEmpty(message = "monsterMeta can't be empty")
   private String monsterMeta;
   @Column
   @JsonProperty("Armor Class")
@@ -95,7 +96,7 @@ public class Monster {
   @Column
   @JsonProperty("Challenge")
   @Min(value = 0, message = "MonsterChallenge not be less than 18")
-  @Max(value = 155000, message = "MonsterChallenge not be greater than 150")
+  @Max(value = 155000, message = "MonsterChallenge not be greater than 155000")
   private int monsterChallenge;
   @Column
   @JsonProperty("Traits")
@@ -110,7 +111,9 @@ public class Monster {
   @JsonProperty("img_url")
   private String monsterPic;
   @Column
-  @NotEmpty(message = "monsterOwner can't be blank")
+  @JsonProperty("monsterOwner")
+  @NotNull(message = "monsterOwner can't be null")
+  @NotEmpty(message = "monsterOwner can't be empty")
   private String monsterOwner;
 
 }

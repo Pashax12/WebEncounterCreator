@@ -7,6 +7,7 @@ import by.paul.springbootrestservice.monster.entity.SearcherCriteria;
 import by.paul.springbootrestservice.monster.service.dto.DTOConverter;
 import by.paul.springbootrestservice.monster.service.dto.GeneratedMonsterDTO;
 import by.paul.springbootrestservice.monster.repository.MonsterRepository;
+import by.paul.springbootrestservice.monster.service.specification.CriteriaSpecification;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
