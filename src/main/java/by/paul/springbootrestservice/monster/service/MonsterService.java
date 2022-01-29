@@ -4,53 +4,46 @@ import by.paul.springbootrestservice.monster.entity.EncounterBuilder;
 import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.entity.MonsterResponse;
 import by.paul.springbootrestservice.monster.entity.SearcherCriteria;
-import by.paul.springbootrestservice.monster.service.dto.DTOConverter;
 import by.paul.springbootrestservice.monster.service.dto.GeneratedMonsterDTO;
-import by.paul.springbootrestservice.monster.repository.MonsterRepository;
-import by.paul.springbootrestservice.monster.service.specification.CriteriaSpecification;
+import by.paul.springbootrestservice.monster.service.serviceLogic.customMonster.HomebrewCreator;
+import by.paul.springbootrestservice.monster.service.serviceLogic.generator.EncounterGenerator;
+import by.paul.springbootrestservice.monster.service.serviceLogic.library.MonsterLibrary;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.agent.builder.AgentBuilder.LambdaInstrumentationStrategy;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class MonsterService {
-  private final MonsterRepository monsterRepository;
-  private final DTOConverter convertedMonsterDTOS;
-  private final CriteriaSpecification criteriaSpecification;
-  private final MonsterEncounterGenerator monsterEncounterGenerator;
 
-  public MonsterResponse addMonster(Monster monster) {
-    if(!monsterRepository.existsByMonsterNameAndMonsterOwner(monster.getMonsterName(), monster.getMonsterOwner())){
-      monster.setMonsterOwner("Homebrew: ".concat(monster.getMonsterOwner()));
-      monsterRepository.save(monster);
-      return MonsterResponse.builder().statusString("Monster successfully added").statusCode(HttpStatus.CREATED).build();
+  private final EncounterGenerator encounterGenerator;
+  private final HomebrewCreator homebrewCreator;
+  private final MonsterLibrary monsterLibrary;
+
+  public ResponseEntity<String> addMonster(Monster monster) {
+    monster.setMonsterOwner("Homebrew: ".concat(monster.getMonsterOwner()));
+    if(!homebrewCreator.uniqueChecker(monster.getMonsterName(), monster.getMonsterOwner())){
+      homebrewCreator.addMonster(monster);
+      return new ResponseEntity<>("Monster successfully added", HttpStatus.CREATED);
     }
-    return MonsterResponse.builder().statusString("Monster is not unique").statusCode(HttpStatus.ACCEPTED).build();
-  }
-  public List<Monster> generateEncounter(EncounterBuilder encounterBuilder) {
-    return monsterEncounterGenerator.monstersListGenerator(monsterRepository.
-            findAllByMonsterChallengeBetweenAndMonsterOwnerOrderByMonsterId(
-                encounterBuilder.getHoleFightExp() / 5,
-                encounterBuilder.getHoleFightExp() + 100, encounterBuilder.getMonsterOwner()),
-        encounterBuilder.isMixedTypes(), encounterBuilder.getHoleFightExp() + 100);
+    return new ResponseEntity<>("Monster is not unique", HttpStatus.ACCEPTED);
   }
 
-  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterBuilder encounterBuilder){
-    return convertedMonsterDTOS.convertMonsterDtoToMonster(generateEncounter(encounterBuilder));
-  }
-  public List<Monster> getMonsterFromLibrary(SearcherCriteria searcherCriteria){
-    return monsterRepository.findAll(criteriaSpecification.searchSpecification(searcherCriteria));
+  public ResponseEntity<List<GeneratedMonsterDTO>> getGeneratedMonsters(EncounterBuilder encounterBuilder){
+    return new ResponseEntity<>(encounterGenerator.getGeneratedMonsters(encounterBuilder), HttpStatus.FOUND);
   }
 
-  public List<GeneratedMonsterDTO> getAllAuthorMonster(String authorName) {
-    return convertedMonsterDTOS.convertMonsterDtoToMonster(monsterRepository.findAllByMonsterOwnerIsContainingOrderByMonsterId(authorName));
+  public ResponseEntity<List<Monster>> getMonsterByName(SearcherCriteria searcherCriteria){
+    return new ResponseEntity<>(monsterLibrary.getMonsterByName(searcherCriteria),HttpStatus.FOUND);
   }
-  public Monster getMonsterFromLibrary(String monsterName){
-    if(monsterName.contains("_")){
-      monsterName= monsterName.replace("_"," ");
-    }
-    return monsterRepository.findByMonsterName(monsterName);
+
+  public ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(String authorName) {
+    return new ResponseEntity<>(monsterLibrary.getAllAuthorMonster(authorName),HttpStatus.FOUND);
+  }
+  public ResponseEntity<Monster> getMonsterByName(String monsterName){
+    return new ResponseEntity<>(monsterLibrary.getMonsterByName(monsterName),HttpStatus.FOUND);
   }
 }

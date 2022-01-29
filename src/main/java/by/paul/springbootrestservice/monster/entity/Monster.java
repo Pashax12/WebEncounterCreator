@@ -31,7 +31,7 @@ public class Monster {
   private String monsterName;
   @Column
   @JsonProperty("meta")
-  @NotNull(message = "monsterMeta can't be null")
+  @NotNull(message = "monsterMeta can't be null" )
   @NotEmpty(message = "monsterMeta can't be empty")
   private String monsterMeta;
   @Column

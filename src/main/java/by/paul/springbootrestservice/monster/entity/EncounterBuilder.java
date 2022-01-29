@@ -3,6 +3,7 @@ package by.paul.springbootrestservice.monster.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -26,17 +27,12 @@ public class EncounterBuilder {
   private boolean mixedTypes;
 
   public int getHoleFightExp() {
-    int expCounter = 0;
-    for (Integer level : parseInteger()) {
-      expCounter += DifficultyEnum.valueOf(difficulty).getExpLevel(level);
-    }
-    return expCounter;
+    return parseInteger().stream()
+        .mapToInt(integer -> DifficultyEnum.valueOf(difficulty).getExpLevel(integer)).sum();
   }
 
   private List<Integer> parseInteger() {
-    List<Integer> levels = new ArrayList<>();
-    playersLevel.forEach(s -> levels.add(Integer.parseInt(s.split(" ")[0])));
-    return levels;
+    return  playersLevel.stream().map(s ->Integer.parseInt(s.split(" ")[0])).collect(Collectors.toList());
   }
 
 

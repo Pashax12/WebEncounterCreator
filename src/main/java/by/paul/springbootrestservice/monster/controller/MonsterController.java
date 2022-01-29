@@ -25,29 +25,28 @@ public class MonsterController {
   private final MonsterService monsterService;
 
   @PostMapping("/UserMonsterCreator/addUserMonster")
-  public ResponseEntity<String> createEncounter(@Valid @RequestBody Monster monster) {
-    MonsterResponse monsterResponse = monsterService.addMonster(monster);
-    return new ResponseEntity<>(monsterResponse.getStatusString(), monsterResponse.getStatusCode());
+  public ResponseEntity<String> addMonster(@Valid @RequestBody Monster monster) {
+    return  monsterService.addMonster(monster);
   }
 
   @PostMapping("/EncounterGenerator/createEncounter")
-  public List<GeneratedMonsterDTO> createEncounter(@Valid
+  public ResponseEntity<List<GeneratedMonsterDTO>> createEncounter(@Valid
   @RequestBody EncounterBuilder encounterBuilder) {
     return monsterService.getGeneratedMonsters(encounterBuilder);
   }
 
   @PostMapping("/MonsterLibrary/postMonsters")
-  public List<Monster> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
-    return monsterService.getMonsterFromLibrary(searcherCriteria);
+  public ResponseEntity<List<Monster>> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
+    return monsterService.getMonsterByName(searcherCriteria);
   }
 
   @GetMapping("/MonsterLibrary/getMonster/{path}")
-  public Monster getMonsterByName(@PathVariable @Valid @NotBlank String path) {
-    return monsterService.getMonsterFromLibrary(path);
+  public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String path) {
+    return monsterService.getMonsterByName(path);
   }
 
   @GetMapping("/MonsterLibrary/searchMonster")
-  public List<GeneratedMonsterDTO> getAllAuthorMonster(@Valid @NotBlank
+  public ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(@Valid @NotBlank
   @RequestParam(value = "author", defaultValue = "admin") String authorName) {
     return monsterService.getAllAuthorMonster(authorName);
   }
