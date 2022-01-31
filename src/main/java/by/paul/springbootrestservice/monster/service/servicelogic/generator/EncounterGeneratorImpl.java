@@ -1,18 +1,17 @@
-package by.paul.springbootrestservice.monster.service.serviceLogic.generator;
+package by.paul.springbootrestservice.monster.service.servicelogic.generator;
 
 import by.paul.springbootrestservice.monster.entity.EncounterBuilder;
 import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.repository.MonsterRepository;
-import by.paul.springbootrestservice.monster.service.MonsterEncounterGenerator;
 import by.paul.springbootrestservice.monster.service.dto.DTOConverter;
 import by.paul.springbootrestservice.monster.service.dto.GeneratedMonsterDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class EncounterGenerator {
+public class EncounterGeneratorImpl implements EncounterGenerator{
 
   private final MonsterRepository monsterRepository;
   private final DTOConverter convertedMonsterDTOS;
@@ -25,8 +24,8 @@ public class EncounterGenerator {
                 encounterBuilder.getHoleFightExp() + 100, encounterBuilder.getMonsterOwner()),
         encounterBuilder.isMixedTypes(), encounterBuilder.getHoleFightExp() + 100);
   }
-
-  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterBuilder encounterBuilder){
+  @Override
+  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterBuilder encounterBuilder) {
     return convertedMonsterDTOS.convertMonsterDtoToMonster(generateEncounter(encounterBuilder));
   }
 }

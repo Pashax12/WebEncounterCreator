@@ -1,16 +1,12 @@
 package by.paul.springbootrestservice.monster.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.stereotype.Component;
 
 @Data
-@Component
 public class EncounterBuilder {
 
   @JsonProperty("monsterOwner")
@@ -32,7 +28,8 @@ public class EncounterBuilder {
   }
 
   private List<Integer> parseInteger() {
-    return  playersLevel.stream().map(s ->Integer.parseInt(s.split(" ")[0])).collect(Collectors.toList());
+    return playersLevel.stream().map(s -> Integer.parseInt(s.split(" ")[0]))
+        .collect(Collectors.toList());
   }
 
 

@@ -1,20 +1,22 @@
-package by.paul.springbootrestservice.monster.service.serviceLogic.customMonster;
+package by.paul.springbootrestservice.monster.service.servicelogic.custommonster;
 
 import by.paul.springbootrestservice.monster.entity.Monster;
 import by.paul.springbootrestservice.monster.repository.MonsterRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class HomebrewCreator {
+public class HomebrewCreatorImpl implements HomebrewCreator{
+
   private final MonsterRepository monsterRepository;
 
-  public boolean uniqueChecker(String monsterName, String monsterOwner){
+  @Override
+  public boolean uniqueChecker(String monsterName, String monsterOwner) {
     return monsterRepository.existsByMonsterNameAndMonsterOwner(monsterName, monsterOwner);
   }
-  public void addMonster(Monster monster){
-
+  @Override
+  public void addMonster(Monster monster) {
     monsterRepository.save(monster);
   }
 
