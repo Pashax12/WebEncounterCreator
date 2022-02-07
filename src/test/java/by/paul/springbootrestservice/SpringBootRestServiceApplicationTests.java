@@ -7,16 +7,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import by.paul.springbootrestservice.monster.entity.EncounterBuilder;
-import by.paul.springbootrestservice.monster.entity.Monster;
-import by.paul.springbootrestservice.monster.service.dto.GeneratedMonsterDTO;
-import by.paul.springbootrestservice.monster.service.dto.MonsterMapper;
+import by.paul.monsterservice.entity.EncounterBuilder;
+import by.paul.monsterservice.entity.Monster;
+import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.service.dto.MonsterMapper;
+import by.paul.monsterservice.service.servicelogic.generator.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,16 +27,14 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
 @AutoConfigureMockMvc
-
+@SpringBootTest(classes = SpringBootRestServiceApplicationTests.class)
 class SpringBootRestServiceApplicationTests {
 
   @Autowired
   private MockMvc mockMvc;
   @Mock
-  @Autowired
-  private EncounterBuilder encounterBuilder;
+  private ExpCounter expCounter;
 
 
   @Test
@@ -57,10 +54,11 @@ class SpringBootRestServiceApplicationTests {
             (generatedMonsterDTO.getMonsterChallenge()))
     );
   }
-
+//Можно поиграться с Мок
   @Test
   void expCounter() {
-
+    expCounter = new ExpCounter();
+    EncounterBuilder encounterBuilder = new EncounterBuilder();
     List<String> strings = new ArrayList<>();
     strings.add("5 level bard");
     strings.add("5 level bard");
@@ -70,14 +68,14 @@ class SpringBootRestServiceApplicationTests {
     encounterBuilder.setDifficulty("HARD");
     encounterBuilder.setMonsterOwner("admin");
     encounterBuilder.setMixedTypes(true);
-    Assertions.assertEquals(encounterBuilder.getHoleFightExp(), 3000);
+    Assertions.assertEquals(expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()), 3000);
   }
 
 
   @Test
   @SneakyThrows
   void getMonsters() {
-    this.mockMvc.perform(get("/MonsterLibrary/getMonster/Ape")
+    this.mockMvc.perform(get("/monsterlibrary/Aboleth")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().is(302))
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -97,7 +95,7 @@ class SpringBootRestServiceApplicationTests {
       + "  \"mixedTypes\": false\n"
       + "}";
 
-    this.mockMvc.perform(post("/EncounterGenerator/createEncounter")
+    this.mockMvc.perform(post("/createencounter")
             .contentType(MediaType.APPLICATION_JSON)
             .content(encounter))
         .andExpect(status().is(302))
