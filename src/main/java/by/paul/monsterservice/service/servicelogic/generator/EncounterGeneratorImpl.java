@@ -20,9 +20,9 @@ public class EncounterGeneratorImpl implements EncounterGenerator{
 
   public List<Monster> generateEncounter(EncounterBuilder encounterBuilder) {
     return monsterEncounterGenerator.monstersListGenerator(monsterRepository.
-            findAllByMonsterChallengeBetweenAndMonsterOwnerOrderByMonsterId(
+            findAllByMonsterChallengeBetweenOrderByMonsterId(
                 expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()) / 5,
-                expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()) + 100, encounterBuilder.getMonsterOwner()),
+                expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()) + 100),
         encounterBuilder.isMixedTypes(), expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()) + 100);
   }
   @Override

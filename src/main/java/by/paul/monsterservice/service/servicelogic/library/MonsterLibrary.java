@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MonsterLibrary {
 
-  List<Monster> getMonsterByName(SearcherCriteria searcherCriteria);
+  List<GeneratedMonsterDTO> getMonsterByName(SearcherCriteria searcherCriteria);
   List<GeneratedMonsterDTO> getAllAuthorMonster(String authorName);
   Monster getMonsterByName(String monsterName);
 }

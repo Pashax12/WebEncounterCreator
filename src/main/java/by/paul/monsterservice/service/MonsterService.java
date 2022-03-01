@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 public interface MonsterService {
   ResponseEntity<String> addMonster(Monster monster) ;
   ResponseEntity<List<GeneratedMonsterDTO>> getGeneratedMonsters(EncounterBuilder encounterBuilder);
-  ResponseEntity<List<Monster>> getMonsterCriteria(SearcherCriteria searcherCriteria);
+  ResponseEntity<List<GeneratedMonsterDTO>> getMonsterCriteria(SearcherCriteria searcherCriteria);
   ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(String authorName);
   ResponseEntity<Monster> getMonsterCriteria(String monsterName);
 }

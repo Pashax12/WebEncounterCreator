@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Entity
-@Table(name = "monster_list")
+@Table(name = "monster_list") 
 @Component
 @NotNull
 public class Monster {
@@ -35,10 +35,10 @@ public class Monster {
   @NotEmpty(message = "monsterMeta can't be empty")
   private String monsterMeta;
   @Column
-  @JsonProperty("Armor Class")
+  @JsonProperty("Armor_Class")
   private String monsterArmour;
   @Column
-  @JsonProperty("Hit Points")
+  @JsonProperty("Hit_Points")
   private String monsterHP;
   @Column
   @JsonProperty("Speed")
@@ -82,7 +82,7 @@ public class Monster {
   private String monsterCHA_mod;
 
   @Column
-  @JsonProperty("Saving Throws")
+  @JsonProperty("Saving_Throws")
   private String monsterSavingTrows;
   @Column
   @JsonProperty("Skills")
@@ -105,7 +105,7 @@ public class Monster {
   @JsonProperty("Actions")
   private String monsterActions;
   @Column
-  @JsonProperty("Legendary Actions")
+  @JsonProperty("Legendary_Actions")
   private String monsterLegendaryActions;
   @Column
   @JsonProperty("img_url")

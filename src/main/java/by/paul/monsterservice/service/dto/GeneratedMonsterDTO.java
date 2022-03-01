@@ -16,7 +16,5 @@ public class GeneratedMonsterDTO {
   @NotBlank
   @JsonProperty("monsterChallenge")
   int monsterChallenge;
-  @JsonProperty("monsterPath")
-  @NotBlank
-  String monsterPath;
+
 }

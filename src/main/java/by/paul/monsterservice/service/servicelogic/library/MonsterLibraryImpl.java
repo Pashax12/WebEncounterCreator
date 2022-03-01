@@ -19,8 +19,9 @@ public class MonsterLibraryImpl implements MonsterLibrary {
   private final CriteriaSpecificationImpl criteriaSpecificationImpl;
 
   @Override
-  public List<Monster> getMonsterByName(SearcherCriteria searcherCriteria) {
-    return monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searcherCriteria));
+  public List<GeneratedMonsterDTO> getMonsterByName(SearcherCriteria searcherCriteria) {
+    return convertedMonsterDTOS.convertMonsterDtoToMonster(
+        monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searcherCriteria)));
   }
 
   @Override

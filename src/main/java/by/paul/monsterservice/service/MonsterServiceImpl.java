@@ -26,31 +26,31 @@ public class MonsterServiceImpl implements MonsterService {
     monster.setMonsterOwner("Homebrew: ".concat(monster.getMonsterOwner()));
     if (!homebrewCreator.uniqueChecker(monster.getMonsterName(), monster.getMonsterOwner())) {
       homebrewCreator.addMonster(monster);
-      return new ResponseEntity<>("Monster successfully added", HttpStatus.CREATED);
+      return new ResponseEntity<>("Monster successfully added", HttpStatus.OK);
     }
-    return new ResponseEntity<>("Monster is not unique", HttpStatus.ACCEPTED);
+    return new ResponseEntity<>("Monster is not unique", HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<List<GeneratedMonsterDTO>> getGeneratedMonsters(
       EncounterBuilder encounterBuilder) {
     return new ResponseEntity<>(encounterGenerator.getGeneratedMonsters(encounterBuilder),
-        HttpStatus.FOUND);
+        HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<List<Monster>> getMonsterCriteria(SearcherCriteria searcherCriteria) {
+  public ResponseEntity<List<GeneratedMonsterDTO>> getMonsterCriteria(SearcherCriteria searcherCriteria) {
     return new ResponseEntity<>(monsterLibrary.getMonsterByName(searcherCriteria),
-        HttpStatus.FOUND);
+        HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(String authorName) {
-    return new ResponseEntity<>(monsterLibrary.getAllAuthorMonster(authorName), HttpStatus.FOUND);
+    return new ResponseEntity<>(monsterLibrary.getAllAuthorMonster(authorName), HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<Monster> getMonsterCriteria(String monsterName) {
-    return new ResponseEntity<>(monsterLibrary.getMonsterByName(monsterName), HttpStatus.FOUND);
+    return new ResponseEntity<>(monsterLibrary.getMonsterByName(monsterName), HttpStatus.OK);
   }
 }

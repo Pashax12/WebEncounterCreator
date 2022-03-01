@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin
 public class MonsterController {
 
   private final MonsterService monsterService;
@@ -35,11 +37,11 @@ public class MonsterController {
   }
 
   @PostMapping("/monsterlibrary")
-  public ResponseEntity<List<Monster>> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
+  public ResponseEntity<List<GeneratedMonsterDTO>> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
     return monsterService.getMonsterCriteria(searcherCriteria);
   }
 
-  @GetMapping("/monsterlibrary/{path}")
+    @GetMapping("/monsterlibrary/{path}")
   public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String path) {
     return monsterService.getMonsterCriteria(path);
   }

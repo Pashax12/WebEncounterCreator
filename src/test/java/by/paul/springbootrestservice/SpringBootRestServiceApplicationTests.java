@@ -66,7 +66,6 @@ class SpringBootRestServiceApplicationTests {
     strings.add("5 level bard");
     encounterBuilder.setPlayersLevel(strings);
     encounterBuilder.setDifficulty("HARD");
-    encounterBuilder.setMonsterOwner("admin");
     encounterBuilder.setMixedTypes(true);
     Assertions.assertEquals(expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()), 3000);
   }

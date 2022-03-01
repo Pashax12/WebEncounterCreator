@@ -21,15 +21,15 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
 
       List<Predicate> predicateList = new ArrayList<>();
 
-      if (criteria.getMonsterType() != null) {
+      if (criteria.getMonsterType() != null&& !criteria.getMonsterType().equals("")) {
         predicateList.add(criteriaBuilder
             .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterType() + "%"));
       }
-      if (criteria.getMonsterSize() != null) {
+      if (criteria.getMonsterSize() != null && !criteria.getMonsterSize().equals("")) {
         predicateList.add(criteriaBuilder
             .like(root.get(Monster_.MONSTER_META), criteria.getMonsterSize() + '%'));
       }
-      if (criteria.getMonsterOutlook() != null) {
+      if (criteria.getMonsterOutlook() != null && !criteria.getMonsterOutlook().equals("")) {
         predicateList.add(criteriaBuilder
             .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterOutlook()));
       }
@@ -38,11 +38,11 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
             .greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
                 criteria.getMinMonsterChallenge()));
       }
-      if (criteria.getMaxMonsterChallenge() <= 155000) {
+      if (criteria.getMaxMonsterChallenge() <= 155000 && criteria.getMaxMonsterChallenge() > 0) {
         predicateList.add(criteriaBuilder
             .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
                 criteria.getMaxMonsterChallenge()));
-      } else if (criteria.getMaxMonsterChallenge() == 0) {
+      } else if (criteria.getMaxMonsterChallenge() == 0 ) {
         predicateList.add(criteriaBuilder
             .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), 155000));
       }
