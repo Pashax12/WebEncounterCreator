@@ -9,6 +9,7 @@ import by.paul.monsterservice.service.servicelogic.generator.EncounterGenerator;
 import by.paul.monsterservice.service.servicelogic.library.MonsterLibrary;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,18 +18,23 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MonsterServiceImpl implements MonsterService {
 
+  @Value("${projectData.addMonster.unique}")
+  private String uniqueResponse;
+
+  @Value("${projectData.addMonster.notUnique}")
+  private String unUniqueResponse;
+
   private final EncounterGenerator encounterGenerator;
   private final HomebrewCreator homebrewCreator;
   private final MonsterLibrary monsterLibrary;
 
   @Override
   public ResponseEntity<String> addMonster(Monster monster) {
-    monster.setMonsterOwner("Homebrew: ".concat(monster.getMonsterOwner()));
-    if (!homebrewCreator.uniqueChecker(monster.getMonsterName(), monster.getMonsterOwner())) {
+    if (!homebrewCreator.uniqueChecker(monster.getMonsterName())){
       homebrewCreator.addMonster(monster);
-      return new ResponseEntity<>("Monster successfully added", HttpStatus.OK);
+      return new ResponseEntity<>(uniqueResponse, HttpStatus.OK);
     }
-    return new ResponseEntity<>("Monster is not unique", HttpStatus.OK);
+    return new ResponseEntity<>(unUniqueResponse, HttpStatus.OK);
   }
 
   @Override

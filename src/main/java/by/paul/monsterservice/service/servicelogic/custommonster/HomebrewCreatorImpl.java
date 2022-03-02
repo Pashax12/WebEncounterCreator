@@ -12,8 +12,8 @@ public class HomebrewCreatorImpl implements HomebrewCreator{
   private final MonsterRepository monsterRepository;
 
   @Override
-  public boolean uniqueChecker(String monsterName, String monsterOwner) {
-    return monsterRepository.existsByMonsterNameAndMonsterOwner(monsterName, monsterOwner);
+  public boolean uniqueChecker(String monsterName) {
+    return monsterRepository.existsByMonsterName(monsterName);
   }
   @Override
   public void addMonster(Monster monster) {

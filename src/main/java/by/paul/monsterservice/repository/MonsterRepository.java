@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MonsterRepository extends CrudRepository<Monster, Long>,
-    JpaSpecificationExecutor<Monster> { 
+    JpaSpecificationExecutor<Monster> {
 
-  Boolean existsByMonsterNameAndMonsterOwner(String monsterName, String monsterOwner);
-  List<Monster> findAll( Specification<Monster> spec );//Page - почитать
+  Boolean existsByMonsterName(String monsterName);
+
+  List<Monster> findAll(Specification<Monster> spec);//Page - почитать
 
   List<Monster> findAllByMonsterChallengeBetweenOrderByMonsterId(
       int monsterChallenge, int monsterChallenge2);
