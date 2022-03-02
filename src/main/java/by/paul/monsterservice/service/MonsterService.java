@@ -3,7 +3,7 @@ package by.paul.monsterservice.service;
 import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearcherCriteria;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 

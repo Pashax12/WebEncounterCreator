@@ -4,7 +4,7 @@ import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearcherCriteria;
 import by.paul.monsterservice.service.MonsterService;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

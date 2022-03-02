@@ -3,7 +3,7 @@ package by.paul.monsterservice.service;
 import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearcherCriteria;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import by.paul.monsterservice.service.servicelogic.custommonster.HomebrewCreator;
 import by.paul.monsterservice.service.servicelogic.generator.EncounterGenerator;
 import by.paul.monsterservice.service.servicelogic.library.MonsterLibrary;

@@ -12,15 +12,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+
 
 @Data
 @Entity
-@Table(name = "monster_list") 
-@Component
+@Table(name = "monster_list")
 @NotNull
 public class Monster {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long monsterId;

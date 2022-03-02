@@ -4,7 +4,7 @@ import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.repository.MonsterRepository;
 import by.paul.monsterservice.service.dto.DTOConverter;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +33,6 @@ public class EncounterGeneratorImpl implements EncounterGenerator{
   }
   @Override
   public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterBuilder encounterBuilder) {
-    return convertedMonsterDTOS.convertMonsterDtoToMonster(generateEncounter(encounterBuilder));
+    return convertedMonsterDTOS.convertMonsterToMonsterDto(generateEncounter(encounterBuilder));
   }
 }

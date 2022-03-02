@@ -4,7 +4,7 @@ import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearcherCriteria;
 import by.paul.monsterservice.repository.MonsterRepository;
 import by.paul.monsterservice.service.dto.DTOConverter;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import by.paul.monsterservice.repository.specification.CriteriaSpecificationImpl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class MonsterLibraryImpl implements MonsterLibrary {
 
   @Override
   public List<GeneratedMonsterDTO> getMonsterByName(SearcherCriteria searcherCriteria) {
-    return convertedMonsterDTOS.convertMonsterDtoToMonster(
+    return convertedMonsterDTOS.convertMonsterToMonsterDto(
         monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searcherCriteria)));
   }
 
   @Override
   public List<GeneratedMonsterDTO> getAllAuthorMonster(String authorName) {
-    return convertedMonsterDTOS.convertMonsterDtoToMonster(
+    return convertedMonsterDTOS.convertMonsterToMonsterDto(
         monsterRepository.findAllByMonsterOwnerIsContainingOrderByMonsterId(authorName));
   }
 

@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import by.paul.monsterservice.service.dto.MonsterMapper;
 import by.paul.monsterservice.service.servicelogic.generator.ExpCounter;
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package by.paul.monsterservice.service.dto;
 
+import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import by.paul.monsterservice.entity.Monster;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
