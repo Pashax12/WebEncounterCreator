@@ -1,15 +1,16 @@
 package by.paul.springbootrestservice;
 
 
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import by.paul.monsterservice.entity.EncounterBuilder;
-import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.GeneratedMonsterDTO;
+import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.service.dto.MonsterMapper;
 import by.paul.monsterservice.service.servicelogic.generator.ExpCounter;
 import java.util.ArrayList;
@@ -54,7 +55,8 @@ class SpringBootRestServiceApplicationTests {
             (generatedMonsterDTO.getMonsterChallenge()))
     );
   }
-//Можно поиграться с Мок
+
+  //Можно поиграться с Мок
   @Test
   void expCounter() {
     expCounter = new ExpCounter();
@@ -67,39 +69,32 @@ class SpringBootRestServiceApplicationTests {
     encounterBuilder.setPlayersLevel(strings);
     encounterBuilder.setDifficulty("HARD");
     encounterBuilder.setMixedTypes(true);
-    Assertions.assertEquals(expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()), 3000);
+    Assertions.assertEquals(expCounter
+            .getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()),
+        3000);
   }
 
 
   @Test
   @SneakyThrows
   void getMonsters() {
-    this.mockMvc.perform(get("/monsterlibrary/Aboleth")
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().is(302))
+    this.mockMvc.perform(get("/monsterlibrary/Ape")
+          .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.name").value("Ape"));
+        .andExpect(jsonPath("$.name").value("Ape"))
+        .andDo(print());
   }
 
   @Test
   @SneakyThrows
-  void getEncounter(){
-  String encounter = "{\n"
-      + "  \"monsterOwner\":\"admin\",\n"
-      + "  \"difficulty\": \"HARD\",\n"
-      + "  \"playersLevel\": [\"5 level priest\",\n"
-      + "  \"5 level priest\",\n"
-      + "  \"5 level priest\",\n"
-      + "  \"5 level priest\"],\n"
-      + "  \"mixedTypes\": false\n"
-      + "}";
-
-    this.mockMvc.perform(post("/createencounter")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(encounter))
-        .andExpect(status().is(302))
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+  void getArticle() {
+    this.mockMvc.perform(get("/article/2")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andDo(print());
   }
+
 
 }
