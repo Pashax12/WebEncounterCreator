@@ -1,12 +1,5 @@
-package by.paul.springbootrestservice;
+package by.paul.monsterservice;
 
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.GeneratedMonsterDTO;
@@ -15,25 +8,15 @@ import by.paul.monsterservice.service.dto.MonsterMapper;
 import by.paul.monsterservice.service.servicelogic.generator.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc
+
 @SpringBootTest(classes = SpringBootRestServiceApplicationTests.class)
 class SpringBootRestServiceApplicationTests {
 
-  @Autowired
-  private MockMvc mockMvc;
   @Mock
   private ExpCounter expCounter;
 
@@ -68,33 +51,9 @@ class SpringBootRestServiceApplicationTests {
     strings.add("5 level bard");
     encounterBuilder.setPlayersLevel(strings);
     encounterBuilder.setDifficulty("HARD");
-    encounterBuilder.setMixedTypes(true);
     Assertions.assertEquals(expCounter
             .getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty()),
         3000);
   }
-
-
-  @Test
-  @SneakyThrows
-  void getMonsters() {
-    this.mockMvc.perform(get("/monsterlibrary/Ape")
-          .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.name").value("Ape"))
-        .andDo(print());
-  }
-
-  @Test
-  @SneakyThrows
-  void getArticle() {
-    this.mockMvc.perform(get("/article/2")
-        .contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andDo(print());
-  }
-
 
 }
