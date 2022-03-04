@@ -1,8 +1,8 @@
 package by.paul.monsterservice;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,31 +16,51 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ArticleControllerTest {
+public class MonsterControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
   @Test
   @SneakyThrows
-  void getMonsters() {
-    this.mockMvc.perform(get("/article")
-        .contentType(MediaType.APPLICATION_JSON))
+  void getEncounter(){
+    String encounter = "{\n"
+        + "  \"monsterOwner\":\"admin\",\n"
+        + "  \"difficulty\": \"HARD\",\n"
+        + "  \"playersLevel\": [\"5 level priest\",\n"
+        + "  \"5 level priest\",\n"
+        + "  \"5 level priest\",\n"
+        + "  \"5 level priest\"],\n"
+        + "  \"mixedTypes\": false\n"
+        + "}";
+
+    this.mockMvc.perform(post("/createencounter")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(encounter))
         .andExpect(status().isOk())
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.[0].articleId").value("5"))
-        .andDo(print());
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
   }
 
   @Test
   @SneakyThrows
-  void getArticle() {
-    this.mockMvc.perform(get("/article/2")
+  void getMonsterName() {
+    this.mockMvc.perform(get("/monsterlibrary/Ape")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.articleId").value("2"))
+        .andExpect(jsonPath("$.name").value("Ape"))
         .andDo(print());
   }
-
+  @Test
+  @SneakyThrows
+  void getMonsterAuthor() {
+    this.mockMvc.perform(get("/monsterlibrary")
+        .param("author","admin")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.[0].monsterName").value("Aboleth"))
+        .andDo(print());
+  }
 }
