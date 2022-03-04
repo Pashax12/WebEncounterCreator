@@ -1,8 +1,9 @@
 package by.paul.monsterservice;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,7 +24,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getEncounter(){
+  void getEncounter() {
     String encounter = "{\n"
         + "  \"monsterOwner\":\"admin\",\n"
         + "  \"difficulty\": \"HARD\",\n"
@@ -44,6 +45,28 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
+  void searchCriteria() {
+    String searchCriteria = "{\n"
+        + "    \"monsterType\":\"\",\n"
+        + "    \"monsterSize\":\"\",\n"
+        + "    \"minMonsterChallenge\":\"0\",\n"
+        + "    \"maxMonsterChallenge\":\"155000\",\n"
+        + "    \"monsterOutlook\":\"\",\n"
+        + "    \"source\":false,\n"
+        + "    \"legendaryAction\":false,\n"
+        + "    \"specialSkills\":true\n"
+        + "}\n";
+
+    this.mockMvc.perform(post("/monsterlibrary")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(searchCriteria))
+        .andExpect(status().isOk())
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+  }
+
+  @Test
+  @SneakyThrows
   void getMonsterName() {
     this.mockMvc.perform(get("/monsterlibrary/Ape")
         .contentType(MediaType.APPLICATION_JSON))
@@ -52,11 +75,12 @@ public class MonsterControllerTest {
         .andExpect(jsonPath("$.name").value("Ape"))
         .andDo(print());
   }
+
   @Test
   @SneakyThrows
   void getMonsterAuthor() {
     this.mockMvc.perform(get("/monsterlibrary")
-        .param("author","admin")
+        .param("author", "admin")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
