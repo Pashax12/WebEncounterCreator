@@ -19,6 +19,7 @@ import lombok.Data;
 @Table(name = "monster_list")
 @NotNull
 public class Monster {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long monsterId;
@@ -29,7 +30,7 @@ public class Monster {
   private String monsterName;
   @Column
   @JsonProperty("meta")
-  @NotNull(message = "monsterMeta can't be null" )
+  @NotNull(message = "monsterMeta can't be null")
   @NotEmpty(message = "monsterMeta can't be empty")
   private String monsterMeta;
   @Column
@@ -41,7 +42,6 @@ public class Monster {
   @Column
   @JsonProperty("Speed")
   private String monsterSpeed;
-
   @Column
   @JsonProperty("STR")
   private String monsterSTR;
@@ -78,7 +78,6 @@ public class Monster {
   @Column
   @JsonProperty("CHA_mod")
   private String monsterCHA_mod;
-
   @Column
   @JsonProperty("Saving_Throws")
   private String monsterSavingTrows;

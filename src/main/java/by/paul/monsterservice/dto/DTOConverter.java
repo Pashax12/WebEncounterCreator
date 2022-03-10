@@ -1,12 +1,11 @@
-package by.paul.monsterservice.service.dto;
+package by.paul.monsterservice.dto;
 
+import by.paul.monsterservice.dto.mapper.ArticleMapper;
+import by.paul.monsterservice.dto.mapper.MonsterMapper;
 import by.paul.monsterservice.entity.Article;
-import by.paul.monsterservice.entity.ArticleDTO;
-import by.paul.monsterservice.entity.GeneratedMonsterDTO;
 import by.paul.monsterservice.entity.Monster;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 

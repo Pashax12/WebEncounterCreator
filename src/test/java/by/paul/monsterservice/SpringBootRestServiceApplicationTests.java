@@ -2,10 +2,10 @@ package by.paul.monsterservice;
 
 
 import by.paul.monsterservice.entity.EncounterBuilder;
-import by.paul.monsterservice.entity.GeneratedMonsterDTO;
+import by.paul.monsterservice.dto.GeneratedMonsterDTO;
 import by.paul.monsterservice.entity.Monster;
-import by.paul.monsterservice.service.dto.MonsterMapper;
-import by.paul.monsterservice.service.servicelogic.generator.ExpCounter;
+import by.paul.monsterservice.dto.mapper.MonsterMapper;
+import by.paul.monsterservice.service.monsterservice.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

@@ -2,8 +2,6 @@ package by.paul.monsterservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -19,6 +17,4 @@ public class EncounterBuilder {
   @JsonProperty("mixedTypes")
   @NotNull(message = "mixedTypes can't be null")
   private boolean mixedTypes;
-
-
 }

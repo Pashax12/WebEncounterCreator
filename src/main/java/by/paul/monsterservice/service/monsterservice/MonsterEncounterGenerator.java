@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.servicelogic.generator;
+package by.paul.monsterservice.service.monsterservice;
 
 
 import by.paul.monsterservice.entity.Monster;

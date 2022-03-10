@@ -1,12 +1,12 @@
-package by.paul.monsterservice.service.dto;
+package by.paul.monsterservice.dto.mapper;
 
+import by.paul.monsterservice.dto.ArticleDTO;
 import by.paul.monsterservice.entity.Article;
-import by.paul.monsterservice.entity.ArticleDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface ArticleMapper{
+public interface ArticleMapper {
 
   ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
 

@@ -3,7 +3,6 @@ package by.paul.monsterservice.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 

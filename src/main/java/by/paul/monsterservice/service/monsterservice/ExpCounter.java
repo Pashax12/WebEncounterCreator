@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.servicelogic.generator;
+package by.paul.monsterservice.service.monsterservice;
 
 import by.paul.monsterservice.entity.DifficultyEnum;
 import java.util.List;
@@ -19,6 +19,4 @@ public class ExpCounter {
     return playersLevel.stream().map(s -> Integer.parseInt(s.split(" ")[0]))
         .collect(Collectors.toList());
   }
-
-
 }

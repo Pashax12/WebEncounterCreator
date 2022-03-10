@@ -1,9 +1,8 @@
 package by.paul.monsterservice.controller;
 
+import by.paul.monsterservice.dto.ArticleDTO;
 import by.paul.monsterservice.entity.Article;
-import by.paul.monsterservice.entity.ArticleDTO;
-import by.paul.monsterservice.entity.GeneratedMonsterDTO;
-import by.paul.monsterservice.service.servicelogic.articles.HomeArticle;
+import by.paul.monsterservice.service.articles.HomeArticle;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +25,7 @@ public class ArticleController {
   public ResponseEntity<List<ArticleDTO>> getAllAuthorMonster() {
     return new ResponseEntity<>(homeArticle.getLastArticles(), HttpStatus.OK);
   }
+
   @GetMapping("/article/{path}")
   public ResponseEntity<Article> getAllAuthorMonster(@PathVariable @Valid @NotBlank Long path) {
     return new ResponseEntity<>(homeArticle.getArticleById(path), HttpStatus.OK);
