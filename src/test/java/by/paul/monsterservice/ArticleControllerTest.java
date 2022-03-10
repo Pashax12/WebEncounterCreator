@@ -28,7 +28,7 @@ public class ArticleControllerTest {
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.[0].articleId").value("5"))
+        .andExpect(jsonPath("$.[0].title").value("Improvisation in D&D for New Dungeon Masters"))
         .andDo(print());
   }
 
