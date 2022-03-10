@@ -1,10 +1,10 @@
 package by.paul.monsterservice.controller;
 
+import by.paul.monsterservice.dto.GeneratedMonsterDTO;
 import by.paul.monsterservice.entity.EncounterBuilder;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearcherCriteria;
-import by.paul.monsterservice.service.MonsterService;
-import by.paul.monsterservice.service.dto.GeneratedMonsterDTO;
+import by.paul.monsterservice.service.monsterservice.MonsterService;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -27,29 +27,30 @@ public class MonsterController {
 
   @PostMapping("/usermonster")
   public ResponseEntity<String> addMonster(@Valid @RequestBody Monster monster) {
-    return monsterService.addMonster(monster);
+    return ResponseEntity.ok(monsterService.addMonster(monster));
   }
 
   @PostMapping("/createencounter")
   public ResponseEntity<List<GeneratedMonsterDTO>> createEncounter(@Valid
   @RequestBody EncounterBuilder encounterBuilder) {
-    return monsterService.getGeneratedMonsters(encounterBuilder);
+    return ResponseEntity.ok(monsterService.getGeneratedMonsters(encounterBuilder));
   }
 
   @PostMapping("/monsterlibrary")
-  public ResponseEntity<List<GeneratedMonsterDTO>> getMonsters(@Valid @RequestBody  SearcherCriteria searcherCriteria) {
-    return monsterService.getMonsterCriteria(searcherCriteria);
+  public ResponseEntity<List<GeneratedMonsterDTO>> getMonsters(
+      @Valid @RequestBody SearcherCriteria searcherCriteria) {
+    return ResponseEntity.ok(monsterService.getMonsterByCriteria(searcherCriteria));
   }
 
-    @GetMapping("/monsterlibrary/{path}")
+  @GetMapping("/monsterlibrary/{path}")
   public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String path) {
-    return monsterService.getMonsterCriteria(path);
+    return ResponseEntity.ok(monsterService.getMonsterByName(path));
   }
 
   @GetMapping("/monsterlibrary")
   public ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(@Valid @NotBlank
   @RequestParam(value = "author", defaultValue = "admin") String authorName) {
-    return monsterService.getAllAuthorMonster(authorName);
+    return ResponseEntity.ok(monsterService.getAllAuthorMonster(authorName));
   }
 
 }

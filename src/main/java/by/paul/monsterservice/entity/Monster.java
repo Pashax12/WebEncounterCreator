@@ -12,12 +12,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+
 
 @Data
 @Entity
-@Table(name = "monster_list") 
-@Component
+@Table(name = "monster_list")
 @NotNull
 public class Monster {
 
@@ -31,7 +30,7 @@ public class Monster {
   private String monsterName;
   @Column
   @JsonProperty("meta")
-  @NotNull(message = "monsterMeta can't be null" )
+  @NotNull(message = "monsterMeta can't be null")
   @NotEmpty(message = "monsterMeta can't be empty")
   private String monsterMeta;
   @Column
@@ -43,7 +42,6 @@ public class Monster {
   @Column
   @JsonProperty("Speed")
   private String monsterSpeed;
-
   @Column
   @JsonProperty("STR")
   private String monsterSTR;
@@ -80,7 +78,6 @@ public class Monster {
   @Column
   @JsonProperty("CHA_mod")
   private String monsterCHA_mod;
-
   @Column
   @JsonProperty("Saving_Throws")
   private String monsterSavingTrows;

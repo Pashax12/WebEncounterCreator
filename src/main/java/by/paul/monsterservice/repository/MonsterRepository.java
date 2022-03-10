@@ -11,7 +11,7 @@ public interface MonsterRepository extends CrudRepository<Monster, Long>,
 
   Boolean existsByMonsterName(String monsterName);
 
-  List<Monster> findAll(Specification<Monster> spec);//Page - почитать
+  List<Monster> findAll(Specification<Monster> spec);
 
   List<Monster> findAllByMonsterChallengeBetweenOrderByMonsterId(
       int monsterChallenge, int monsterChallenge2);
@@ -19,6 +19,5 @@ public interface MonsterRepository extends CrudRepository<Monster, Long>,
   List<Monster> findAllByMonsterOwnerIsContainingOrderByMonsterId(String monsterOwner);
 
   Monster findByMonsterName(String monsterName);
-  //
-  //PatternDao - PatterReposity
+
 }
