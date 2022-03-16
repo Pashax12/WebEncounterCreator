@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +28,7 @@ public class MonsterController {
   private final MonsterService monsterService;
 
   @PostMapping("/usermonster")
+  @Secured({"USER", "ADMIN"})
   public ResponseEntity<String> addMonster(@Valid @RequestBody Monster monster) {
     return ResponseEntity.ok(monsterService.addMonster(monster));
   }
