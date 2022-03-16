@@ -13,9 +13,8 @@ public class SecurityUser implements UserDetails {
 
   private final String username;
   private final String password;
-  private final List<SimpleGrantedAuthority> authorities;
   private final boolean isActive;
-
+  private final List<SimpleGrantedAuthority> authorities;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -32,31 +31,30 @@ public class SecurityUser implements UserDetails {
     return username;
   }
 
-  //А если пользователь условно не может заиметь бан?
-
   @Override
   public boolean isAccountNonExpired() {
-    return true;
+    return isActive;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return true;
+    return isActive;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return true;
+    return isActive;
   }
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return isActive;
   }
 
   public static UserDetails fromUser(User user) {
     return new org.springframework.security.core.userdetails.User(
         user.getEmail(), user.getPassword(),
+        true,true,true,true,
         user.getRole().getAuthorities()
     );
   }
