@@ -5,7 +5,10 @@ import by.paul.monsterservice.entity.Monster_;
 import by.paul.monsterservice.entity.SearcherCriteria;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,47 +32,97 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return (root, query, criteriaBuilder) -> {
 
       List<Predicate> predicateList = new ArrayList<>();
-
-      if (criteria.getMonsterType() != null && !criteria.getMonsterType().equals("")) {
-        predicateList.add(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterType() + "%"));
-      }
-      if (criteria.getMonsterSize() != null && !criteria.getMonsterSize().equals("")) {
-        predicateList.add(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), criteria.getMonsterSize() + '%'));
-      }
-      if (criteria.getMonsterOutlook() != null && !criteria.getMonsterOutlook().equals("")) {
-        predicateList.add(criteriaBuilder
-            .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterOutlook()));
-      }
-      if (criteria.getMinMonsterChallenge() >= minChallenge) {
-        predicateList.add(criteriaBuilder
-            .greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
-                criteria.getMinMonsterChallenge()));
-      }
-      if (criteria.getMaxMonsterChallenge() <= maxChallenge
-          && criteria.getMaxMonsterChallenge() > minChallenge) {
-        predicateList.add(criteriaBuilder
-            .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
-                criteria.getMaxMonsterChallenge()));
-      } else if (criteria.getMaxMonsterChallenge() == minChallenge) {
-        predicateList.add(criteriaBuilder
-            .lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), maxChallenge));
-      }
-      if (!criteria.isSource()) {
-        predicateList.add(criteriaBuilder
-            .equal(root.get(Monster_.MONSTER_OWNER), baseOwner));
-      }
-      if (criteria.isLegendaryAction()) {
-        predicateList.add(criteriaBuilder
-            .isNotNull(root.get(Monster_.MONSTER_LEGENDARY_ACTIONS)));
-      }
-      if (criteria.isSpecialSkills()) {
-        predicateList.add(criteriaBuilder
-            .isNotNull(root.get(Monster_.MONSTER_SKILLS)));
-      }
+      Optional.ofNullable(checkMonsterType(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkMonsterSize(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkMonsterOutlook(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkMonsterMinChallenge(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkMonsterMaxChallenge(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkSource(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkLegendaryAction(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
+      Optional.ofNullable(checkSpecialSkills(criteria, criteriaBuilder, root)).ifPresent(
+          predicateList::add);
 
       return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
     };
+  }
+
+  private Predicate checkMonsterType(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+    if (criteria.getMonsterType() != null && !criteria.getMonsterType().equals("")) {
+      return criteriaBuilder
+          .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterType() + "%");
+    }
+    return null;
+  }
+
+  private Predicate checkMonsterSize(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+    if (criteria.getMonsterSize() != null && !criteria.getMonsterSize().equals("")) {
+      return criteriaBuilder
+          .like(root.get(Monster_.MONSTER_META), criteria.getMonsterSize() + '%');
+    }
+    return null;
+  }
+
+  private Predicate checkMonsterOutlook(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+    if (criteria.getMonsterOutlook() != null && !criteria.getMonsterOutlook().equals("")) {
+      return criteriaBuilder
+          .like(root.get(Monster_.MONSTER_META), "%" + criteria.getMonsterOutlook());
+    }
+    return null;
+  }
+
+  private Predicate checkMonsterMinChallenge(SearcherCriteria criteria,
+      CriteriaBuilder criteriaBuilder, Root root) {
+    if (criteria.getMinMonsterChallenge() >= minChallenge) {
+      return criteriaBuilder.greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
+          criteria.getMinMonsterChallenge());
+    }
+    return null;
+  }
+
+  private Predicate checkMonsterMaxChallenge(SearcherCriteria criteria,
+      CriteriaBuilder criteriaBuilder, Root root) {
+    if (criteria.getMaxMonsterChallenge() <= maxChallenge
+        && criteria.getMaxMonsterChallenge() > minChallenge) {
+      return criteriaBuilder.lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
+          criteria.getMaxMonsterChallenge());
+    } else if (criteria.getMaxMonsterChallenge() == minChallenge) {
+      return criteriaBuilder.lessThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE), maxChallenge);
+    }
+    return null;
+  }
+
+  private Predicate checkSource(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+    if (!criteria.isSource()) {
+      return criteriaBuilder.equal(root.get(Monster_.MONSTER_OWNER), baseOwner);
+    }
+    return null;
+  }
+
+  private Predicate checkLegendaryAction(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+    if (criteria.isLegendaryAction()) {
+      return criteriaBuilder.isNotNull(root.get(Monster_.MONSTER_LEGENDARY_ACTIONS));
+    }
+    return null;
+  }
+
+  private Predicate checkSpecialSkills(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+      Root root) {
+
+    if (criteria.isSpecialSkills()) {
+      return criteriaBuilder.isNotNull(root.get(Monster_.MONSTER_SKILLS));
+    }
+    return null;
   }
 }

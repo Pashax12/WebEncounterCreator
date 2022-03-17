@@ -26,6 +26,7 @@ public class MonsterController {
   private final MonsterService monsterService;
 
   @PostMapping("/usermonster")
+//  @PreAuthorize("hasAuthority('access:write')")
   public ResponseEntity<String> addMonster(@Valid @RequestBody Monster monster) {
     return ResponseEntity.ok(monsterService.addMonster(monster));
   }
