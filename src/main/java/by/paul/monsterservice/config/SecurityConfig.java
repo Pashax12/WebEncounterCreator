@@ -30,9 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/usermonster").hasAnyAuthority("access:write")
-        .anyRequest()
-        .permitAll()
+        .anyRequest().permitAll()
+//        .antMatchers("/usermonster").authenticated()
         .and()
         .apply(jwtConfigurer);
   }

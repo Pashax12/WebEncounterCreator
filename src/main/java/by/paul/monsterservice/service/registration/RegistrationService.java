@@ -37,7 +37,7 @@ public class RegistrationService {
   private String nonUnique;
 
 
-  public boolean uniqueChecker(String email) {
+  public boolean checkUnique(String email) {
     return userRepository.existsUserByEmail(email);
   }
 
@@ -48,7 +48,7 @@ public class RegistrationService {
   public String registerUser(UserDTO userDTO) {
     User user = objectMapper.convertValue(userDTO, User.class);
     user.setRole(Role.USER);
-    if (!uniqueChecker(user.getEmail())) {
+    if (!checkUnique(user.getEmail())) {
       addUser(user);
       return uniqueResponse;
     }
@@ -57,6 +57,8 @@ public class RegistrationService {
 
   public ResponseEntity<?> authenticate(AuthenticationRequestDTO request) {
     try {
+      //@ControllerAdvice
+      //return map
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
       User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
       String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
