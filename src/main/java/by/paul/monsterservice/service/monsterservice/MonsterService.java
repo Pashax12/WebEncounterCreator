@@ -67,14 +67,14 @@ public class MonsterService {
 
 
   public String addMonster(Monster monster) {
-    if (!uniqueChecker(monster.getMonsterName())) {
+    if (!checkUnique(monster.getMonsterName())) {
       addHomebrew(monster);
       return uniqueResponse;
     }
     return unUniqueResponse;
   }
 
-  public boolean uniqueChecker(String monsterName) {
+  public boolean checkUnique(String monsterName) {
     return monsterRepository.existsByMonsterName(monsterName);
   }
 
