@@ -22,7 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final JwtConfigurer jwtConfigurer;
 
-  //Обсудить использование web.ignored
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
@@ -30,9 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
-        .antMatchers("/usermonster").hasAnyAuthority("access:write")
-        .anyRequest()
-        .permitAll()
+        .anyRequest().permitAll()
         .and()
         .apply(jwtConfigurer);
   }
