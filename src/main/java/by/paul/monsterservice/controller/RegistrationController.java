@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrationController {
 
   private final RegistrationService registrationService;
-  //how to attach jwt token to header
   @PostMapping("/singup")
   public ResponseEntity<String> addUser(@Valid @RequestBody UserDTO userDTO) {
     return ResponseEntity.ok(registrationService.registerUser(userDTO));

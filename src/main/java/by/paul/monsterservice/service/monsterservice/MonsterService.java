@@ -49,7 +49,7 @@ public class MonsterService {
     return monsterRepository.findByMonsterName(monsterName);
   }
 
-  public List<Monster> generateEncounter(EncounterBuilder encounterBuilder) {
+  private List<Monster> generateEncounter(EncounterBuilder encounterBuilder) {
     return monsterEncounterGenerator.monstersListGenerator(monsterRepository.
             findAllByMonsterChallengeBetweenOrderByMonsterId(
                 expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(),
@@ -74,11 +74,11 @@ public class MonsterService {
     return unUniqueResponse;
   }
 
-  public boolean checkUnique(String monsterName) {
+  private boolean checkUnique(String monsterName) {
     return monsterRepository.existsByMonsterName(monsterName);
   }
 
-  public void addHomebrew(Monster monster) {
+  private void addHomebrew(Monster monster) {
     monsterRepository.save(monster);
   }
 }

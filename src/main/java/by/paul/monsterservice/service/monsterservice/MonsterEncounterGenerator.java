@@ -15,7 +15,7 @@ public class MonsterEncounterGenerator {
         : mixedBattle(possibleMonsterList, fightExp);
   }
 
-  List<Monster> mixedBattle(List<Monster> possibleMonsterList, int fightExp) {
+  private List<Monster> mixedBattle(List<Monster> possibleMonsterList, int fightExp) {
     List<Monster> generatedList = new ArrayList<>();
     while (fightExp >= 0) {
       Monster monster = possibleMonsterList.get((int) (Math.random() * possibleMonsterList.size()));
@@ -25,7 +25,7 @@ public class MonsterEncounterGenerator {
     return generatedList;
   }
 
-  List<Monster> singleBattle(List<Monster> possibleMonsterList, int fightExp) {
+  private List<Monster> singleBattle(List<Monster> possibleMonsterList, int fightExp) {
     List<Monster> generatedList = new ArrayList<>();
     Monster monster = possibleMonsterList.get((int) (Math.random() * possibleMonsterList.size()));
     while (fightExp >= 0) {

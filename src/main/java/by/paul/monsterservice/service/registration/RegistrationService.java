@@ -45,6 +45,7 @@ public class RegistrationService {
   public String registerUser(UserDTO userDTO) {
     User user = objectMapper.convertValue(userDTO, User.class);
     user.setRole(Role.USER);
+    user.setActive(true);
     if (!checkUnique(user.getEmail())) {
       addUser(user);
       return uniqueResponse;
