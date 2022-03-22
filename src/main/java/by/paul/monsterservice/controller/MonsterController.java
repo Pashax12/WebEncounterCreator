@@ -1,10 +1,10 @@
 package by.paul.monsterservice.controller;
 
 import by.paul.monsterservice.dto.GeneratedMonsterDTO;
-import by.paul.monsterservice.entity.EncounterBuilder;
+import by.paul.monsterservice.entity.EncounterSetup;
 import by.paul.monsterservice.entity.Monster;
-import by.paul.monsterservice.entity.SearcherCriteria;
-import by.paul.monsterservice.service.monsterservice.MonsterService;
+import by.paul.monsterservice.entity.SearchCriteria;
+import by.paul.monsterservice.service.monster.MonsterService;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -34,14 +34,14 @@ public class MonsterController {
 
   @PostMapping("/createencounter")
   public ResponseEntity<List<GeneratedMonsterDTO>> createEncounter(@Valid
-  @RequestBody EncounterBuilder encounterBuilder) {
-    return ResponseEntity.ok(monsterService.getGeneratedMonsters(encounterBuilder));
+  @RequestBody EncounterSetup encounterSetup) {
+    return ResponseEntity.ok(monsterService.getGeneratedMonsters(encounterSetup));
   }
 
   @PostMapping("/monsterlibrary")
   public ResponseEntity<List<GeneratedMonsterDTO>> getMonsters(
-      @Valid @RequestBody SearcherCriteria searcherCriteria) {
-    return ResponseEntity.ok(monsterService.getMonsterByCriteria(searcherCriteria));
+      @Valid @RequestBody SearchCriteria searchCriteria) {
+    return ResponseEntity.ok(monsterService.getMonsterByCriteria(searchCriteria));
   }
 
   @GetMapping("/monsterlibrary/{path}")

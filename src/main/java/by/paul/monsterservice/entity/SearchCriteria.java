@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SearcherCriteria {
+public class SearchCriteria {
 
   @JsonProperty("monsterType")
   private String monsterType;

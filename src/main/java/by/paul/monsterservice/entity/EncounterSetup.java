@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class EncounterBuilder {
+public class EncounterSetup {
 
   @JsonProperty("difficulty")
   @NotNull(message = "fight difficulty can't be null")

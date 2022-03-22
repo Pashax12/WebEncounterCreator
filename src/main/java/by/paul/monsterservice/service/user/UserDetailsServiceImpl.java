@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.userservice;
+package by.paul.monsterservice.service.user;
 
 import by.paul.monsterservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

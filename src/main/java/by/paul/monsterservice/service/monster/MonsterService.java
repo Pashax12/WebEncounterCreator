@@ -1,10 +1,10 @@
-package by.paul.monsterservice.service.monsterservice;
+package by.paul.monsterservice.service.monster;
 
 import by.paul.monsterservice.dto.DTOConverter;
 import by.paul.monsterservice.dto.GeneratedMonsterDTO;
-import by.paul.monsterservice.entity.EncounterBuilder;
+import by.paul.monsterservice.entity.EncounterSetup;
 import by.paul.monsterservice.entity.Monster;
-import by.paul.monsterservice.entity.SearcherCriteria;
+import by.paul.monsterservice.entity.SearchCriteria;
 import by.paul.monsterservice.repository.MonsterRepository;
 import by.paul.monsterservice.repository.specification.CriteriaSpecificationImpl;
 import java.util.List;
@@ -32,9 +32,9 @@ public class MonsterService {
   private int bufDifficulty;
 
 
-  public List<GeneratedMonsterDTO> getMonsterByCriteria(SearcherCriteria searcherCriteria) {
+  public List<GeneratedMonsterDTO> getMonsterByCriteria(SearchCriteria searchCriteria) {
     return convertedMonsterDTOS.convertMonsterToMonsterDto(
-        monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searcherCriteria)));
+        monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searchCriteria)));
   }
 
   public List<GeneratedMonsterDTO> getAllAuthorMonster(String authorName) {
@@ -49,20 +49,20 @@ public class MonsterService {
     return monsterRepository.findByMonsterName(monsterName);
   }
 
-  private List<Monster> generateEncounter(EncounterBuilder encounterBuilder) {
+  private List<Monster> generateEncounter(EncounterSetup encounterSetup) {
     return monsterEncounterGenerator.monstersListGenerator(monsterRepository.
             findAllByMonsterChallengeBetweenOrderByMonsterId(
-                expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(),
-                    encounterBuilder.getDifficulty()) / monsterCount,
-                expCounter.getHoleFightExp(encounterBuilder.getPlayersLevel(),
-                    encounterBuilder.getDifficulty()) + bufDifficulty),
-        encounterBuilder.isMixedTypes(), expCounter
-            .getHoleFightExp(encounterBuilder.getPlayersLevel(), encounterBuilder.getDifficulty())
+                expCounter.getHoleFightExp(encounterSetup.getPlayersLevel(),
+                    encounterSetup.getDifficulty()) / monsterCount,
+                expCounter.getHoleFightExp(encounterSetup.getPlayersLevel(),
+                    encounterSetup.getDifficulty()) + bufDifficulty),
+        encounterSetup.isMixedTypes(), expCounter
+            .getHoleFightExp(encounterSetup.getPlayersLevel(), encounterSetup.getDifficulty())
             + bufDifficulty);
   }
 
-  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterBuilder encounterBuilder) {
-    return convertedMonsterDTOS.convertMonsterToMonsterDto(generateEncounter(encounterBuilder));
+  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterSetup encounterSetup) {
+    return convertedMonsterDTOS.convertMonsterToMonsterDto(generateEncounter(encounterSetup));
   }
 
 

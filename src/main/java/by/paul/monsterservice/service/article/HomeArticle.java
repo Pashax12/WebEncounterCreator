@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.articles;
+package by.paul.monsterservice.service.article;
 
 import by.paul.monsterservice.dto.ArticleDTO;
 import by.paul.monsterservice.dto.DTOConverter;

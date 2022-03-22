@@ -1,8 +1,8 @@
 package by.paul.monsterservice;
 
 
-import by.paul.monsterservice.entity.EncounterBuilder;
-import by.paul.monsterservice.service.monsterservice.ExpCounter;
+import by.paul.monsterservice.entity.EncounterSetup;
+import by.paul.monsterservice.service.monster.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,7 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @EnableConfigurationProperties
 class SpringBootRestServiceApplicationTests {
 
-  private static EncounterBuilder encounterBuilder;
+  private static EncounterSetup encounterSetup;
   @Mock
   private ExpCounter expCounter;
 
@@ -30,21 +30,21 @@ class SpringBootRestServiceApplicationTests {
     strings.add("5 level bard");
     strings.add("5 level bard");
     strings.add("5 level bard");
-    encounterBuilder = new EncounterBuilder();
-    encounterBuilder.setPlayersLevel(strings);
+    encounterSetup = new EncounterSetup();
+    encounterSetup.setPlayersLevel(strings);
   }
 
 
   @Test
   void expCounter() {
     Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "HARD"))
+        .getHoleFightExp(encounterSetup.getPlayersLevel(), "HARD"))
         .thenReturn(3000);
     Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "EASY"))
+        .getHoleFightExp(encounterSetup.getPlayersLevel(), "EASY"))
         .thenReturn(1000);
     Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "DEADLY"))
+        .getHoleFightExp(encounterSetup.getPlayersLevel(), "DEADLY"))
         .thenReturn(4400);
     Mockito.when(expCounter
         .getHoleFightExp(null, "HARD")).thenReturn(100);
