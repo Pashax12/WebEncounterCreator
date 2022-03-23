@@ -15,13 +15,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("registrationService")
 @RequiredArgsConstructor
-public class RegistrationService {
+public class RegistrationService implements UserDetailsService {
 
   private final UserRepository userRepository;
   private final ObjectMapper objectMapper;
@@ -34,7 +36,7 @@ public class RegistrationService {
   private String nonUnique;
 
 
-  public boolean checkUnique(String email) {
+  public boolean checkIsUniqueByName(String email) {
     return userRepository.existsUserByEmail(email);
   }
 
@@ -46,7 +48,7 @@ public class RegistrationService {
     User user = objectMapper.convertValue(userDTO, User.class);
     user.setRole(Role.USER);
     user.setActive(true);
-    if (!checkUnique(user.getEmail())) {
+    if (!checkIsUniqueByName(user.getEmail())) {
       addUser(user);
       return uniqueResponse;
     }
@@ -66,5 +68,11 @@ public class RegistrationService {
   public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
     SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
     securityContextLogoutHandler.logout(request, response, null);
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+    return userRepository.findByEmail(name).orElseThrow(() ->
+        new UsernameNotFoundException("User doesn't exists"));
   }
 }
