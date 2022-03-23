@@ -21,7 +21,7 @@ public class ExceptionAdvice {
 
   @ExceptionHandler(UsernameNotFoundException.class)
   public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException e) {
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

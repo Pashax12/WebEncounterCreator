@@ -23,21 +23,35 @@ public class RegistrationControllerTest {
 
   @Test
   @SneakyThrows
-  void signup() {
+  void SuccessfulSignUp() {
     String userUnuique = "{\"email\": \"testUser3@gmail.com\", \"password\": \"82c5162e51af89203828574aa6c3677107d361eb9e3a5f831b1f5f2facc235e0\", \"name\": \"testUser3\"}";
 
     this.mockMvc.perform(post("/auth/singup")
         .contentType(MediaType.APPLICATION_JSON)
         .content(userUnuique))
         .andExpect(status().isOk())
+        .andExpect(jsonPath("$.status").value("User is not unique"))
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+  }
+
+  @Test
+  @SneakyThrows
+  void FailSignIn() {
+    String userForbidden = "{\"email\": \"admin@gmail.com\", \"password\": \"test\"}";
+
+    this.mockMvc.perform(post("/auth/singin")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(userForbidden))
+        .andExpect(status().is(403))
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.TEXT_PLAIN_VALUE));
   }
+
   @Test
   @SneakyThrows
-  void signin() {
+  void SuccessfulSignIn() {
     String userPas = "{\"email\": \"admin@gmail.com\", \"password\": \"admin\"}";
-    String userForbidden = "{\"email\": \"admin@gmail.com\", \"password\": \"test\"}";
 
     this.mockMvc.perform(post("/auth/singin")
         .contentType(MediaType.APPLICATION_JSON)
@@ -46,12 +60,7 @@ public class RegistrationControllerTest {
         .andExpect(jsonPath("$.email").value("admin@gmail.com"))
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andDo(print());
-    this.mockMvc.perform(post("/auth/singin")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(userForbidden))
-        .andExpect(status().is(403))
-        .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.TEXT_PLAIN_VALUE));
+
   }
 
 }

@@ -7,7 +7,9 @@ import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearchCriteria;
 import by.paul.monsterservice.repository.MonsterRepository;
 import by.paul.monsterservice.repository.specification.CriteriaSpecificationImpl;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -66,19 +68,22 @@ public class MonsterService {
   }
 
 
-  public String addMonster(Monster monster) {
-    if (!checkUnique(monster.getMonsterName())) {
-      addHomebrew(monster);
-      return uniqueResponse;
+  public Map<String, String> addMonster(Monster monster) {
+    Map<String, String> response = new HashMap<>();
+    if (!checkIsMonsterUniqueByMonsterName(monster.getMonsterName())) {
+      addHomebrewMonster(monster);
+      response.put("status", uniqueResponse);
+    } else {
+      response.put("status", unUniqueResponse);
     }
-    return unUniqueResponse;
+    return response;
   }
 
-  private boolean checkUnique(String monsterName) {
+  private boolean checkIsMonsterUniqueByMonsterName(String monsterName) {
     return monsterRepository.existsByMonsterName(monsterName);
   }
 
-  private void addHomebrew(Monster monster) {
+  private void addHomebrewMonster(Monster monster) {
     monsterRepository.save(monster);
   }
 }

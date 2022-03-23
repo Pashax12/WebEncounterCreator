@@ -24,7 +24,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getEncounter() {
+  void createEncounterIfAllParamsAllowed() {
     String encounter = "{\n"
         + "  \"monsterOwner\":\"admin\",\n"
         + "  \"difficulty\": \"HARD\",\n"
@@ -42,11 +42,28 @@ public class MonsterControllerTest {
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
   }
+  @Test
+  @SneakyThrows
+  void createEncounterIfWithoutPlayersCharacters() {
+    String encounter = "{\n"
+        + "  \"monsterOwner\":\"admin\",\n"
+        + "  \"difficulty\": \"HARD\",\n"
+        + "  \"playersLevel\": [],\n"
+        + "  \"mixedTypes\": false\n"
+        + "}";
+
+    this.mockMvc.perform(post("/createencounter")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(encounter))
+        .andExpect(status().isOk())
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+  }
 
   @Test
   @SneakyThrows
-  void addMonster() {
-    String monsters = "{\n"
+  void forbiddenAddMonster() {
+    String monster = "{\n"
         + "    \"monsterOwner\": \"Paul\",\n"
         + "    \"name\": \"not Large elemental\",\n"
         + "    \"meta\": \"Tiny elemental, neutral\",\n"
@@ -78,12 +95,14 @@ public class MonsterControllerTest {
 
     this.mockMvc.perform(post("/usermonster")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(monsters))
+        .content(monster))
+        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("$.status").value("JWT token is expired or invalid"))
         .andExpect(status().isForbidden());
   }
   @Test
   @SneakyThrows
-  void searchCriteria() {
+  void getMonstersBySearchCriteria() {
     String searchCriteria = "{\n"
         + "    \"monsterType\":\"\",\n"
         + "    \"monsterSize\":\"\",\n"
@@ -105,7 +124,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getMonsterName() {
+  void getMonsterByName() {
     this.mockMvc.perform(get("/monsterlibrary/Ape")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -116,7 +135,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getMonsterAuthor() {
+  void getMonsterByAuthor() {
     this.mockMvc.perform(get("/monsterlibrary")
         .param("author", "admin")
         .contentType(MediaType.APPLICATION_JSON))

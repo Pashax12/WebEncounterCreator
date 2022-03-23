@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.registration;
+package by.paul.monsterservice.service.user;
 
 import by.paul.monsterservice.dto.AuthenticationRequestDTO;
 import by.paul.monsterservice.dto.UserDTO;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 @Service("registrationService")
 @RequiredArgsConstructor
-public class RegistrationService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
   private final ObjectMapper objectMapper;
@@ -36,7 +36,7 @@ public class RegistrationService implements UserDetailsService {
   private String nonUnique;
 
 
-  public boolean checkIsUniqueByName(String email) {
+  public boolean checkIsUniqueByEmail(String email) {
     return userRepository.existsUserByEmail(email);
   }
 
@@ -44,15 +44,18 @@ public class RegistrationService implements UserDetailsService {
     userRepository.save(user);
   }
 
-  public String registerUser(UserDTO userDTO) {
+  public Map<String, String> registerUser(UserDTO userDTO) {
+    Map<String, String> response = new HashMap<>();
     User user = objectMapper.convertValue(userDTO, User.class);
     user.setRole(Role.USER);
     user.setActive(true);
-    if (!checkIsUniqueByName(user.getEmail())) {
+    if (!checkIsUniqueByEmail(user.getEmail())) {
       addUser(user);
-      return uniqueResponse;
+      response.put("status", uniqueResponse);
+    }else{
+      response.put("status", nonUnique);
     }
-    return nonUnique;
+    return response;
   }
 
   public  Map<String, String> authenticate(AuthenticationRequestDTO request) {

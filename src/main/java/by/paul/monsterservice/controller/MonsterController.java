@@ -6,6 +6,7 @@ import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearchCriteria;
 import by.paul.monsterservice.service.monster.MonsterService;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class MonsterController {
 
   @PostMapping("/usermonster")
   @PreAuthorize("hasAuthority('access:write')")
-  public ResponseEntity<String> addMonster(@Valid @RequestBody Monster monster) {
+  public ResponseEntity<Map<String, String>> addMonster(@Valid @RequestBody Monster monster) {
     return ResponseEntity.ok(monsterService.addMonster(monster));
   }
 
