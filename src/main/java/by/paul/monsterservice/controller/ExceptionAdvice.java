@@ -1,5 +1,6 @@
 package by.paul.monsterservice.controller;
 
+import by.paul.monsterservice.exception.MonsterNotUniqueByNameException;
 import by.paul.monsterservice.exception.UserNotUniqueByUsernameException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,11 @@ public class ExceptionAdvice {
   @ExceptionHandler(UserNotUniqueByUsernameException.class)
   public ResponseEntity<String> handleUserNotUniqueByUsernameException(
       UserNotUniqueByUsernameException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+  @ExceptionHandler(MonsterNotUniqueByNameException.class)
+  public ResponseEntity<String> handleMonsterNotUniqueByNameException(
+      MonsterNotUniqueByNameException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
