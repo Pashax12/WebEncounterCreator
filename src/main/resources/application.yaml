@@ -24,9 +24,6 @@ projectData:
   generator:
     monsterCount: 5
     bufDifficulty: 100
-  monster:
-    unique: Monster successfully added
-    notUnique: Monster is not unique
   specification:
     maxChallenge: 155000
     minChallenge: 10
@@ -35,6 +32,3 @@ projectData:
     header: Authorization
     secretKey: ${ENV_KEY:Pashax12}
     expiration: 60480
-  user:
-    unique: User successfully added
-    notUnique: User is not unique
