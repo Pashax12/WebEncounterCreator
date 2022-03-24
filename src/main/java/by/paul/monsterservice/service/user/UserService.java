@@ -4,6 +4,7 @@ import by.paul.monsterservice.dto.AuthenticationRequestDTO;
 import by.paul.monsterservice.dto.UserDTO;
 import by.paul.monsterservice.entity.Role;
 import by.paul.monsterservice.entity.User;
+import by.paul.monsterservice.exception.UserNotUniqueByUsernameException;
 import by.paul.monsterservice.repository.UserRepository;
 import by.paul.monsterservice.security.JwtTokenProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +13,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,12 +33,6 @@ public class UserService implements UserDetailsService {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
 
-  @Value("${projectData.user.unique}")
-  private String uniqueResponse;
-  @Value("${projectData.user.notUnique}")
-  private String nonUnique;
-
-
   public boolean checkIsUniqueByEmail(String email) {
     return userRepository.existsUserByEmail(email);
   }
@@ -44,18 +41,18 @@ public class UserService implements UserDetailsService {
     userRepository.save(user);
   }
 
-  public Map<String, String> registerUser(UserDTO userDTO) {
-    Map<String, String> response = new HashMap<>();
+  @SneakyThrows
+  public User registerUser(UserDTO userDTO) {
     User user = objectMapper.convertValue(userDTO, User.class);
     user.setRole(Role.USER);
     user.setActive(true);
     if (!checkIsUniqueByEmail(user.getEmail())) {
       addUser(user);
-      response.put("status", uniqueResponse);
+      return user;
     }else{
-      response.put("status", nonUnique);
+      throw new UserNotUniqueByUsernameException("Username not unique");
     }
-    return response;
+
   }
 
   public  Map<String, String> authenticate(AuthenticationRequestDTO request) {

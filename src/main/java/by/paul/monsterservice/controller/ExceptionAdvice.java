@@ -1,5 +1,6 @@
 package by.paul.monsterservice.controller;
 
+import by.paul.monsterservice.exception.UserNotUniqueByUsernameException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,12 @@ public class ExceptionAdvice {
 
   @ExceptionHandler(UsernameNotFoundException.class)
   public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(UserNotUniqueByUsernameException.class)
+  public ResponseEntity<String> handleUserNotUniqueByUsernameException(
+      UserNotUniqueByUsernameException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 

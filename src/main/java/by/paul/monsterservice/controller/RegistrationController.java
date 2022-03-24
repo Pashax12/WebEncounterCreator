@@ -2,6 +2,7 @@ package by.paul.monsterservice.controller;
 
 import by.paul.monsterservice.dto.AuthenticationRequestDTO;
 import by.paul.monsterservice.dto.UserDTO;
+import by.paul.monsterservice.entity.User;
 import by.paul.monsterservice.service.user.UserService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class RegistrationController {
 
   private final UserService userService;
   @PostMapping("/singup")
-  public ResponseEntity<Map<String, String>> addUser(@Valid @RequestBody UserDTO userDTO) {
+  public ResponseEntity<User> addUser(@Valid @RequestBody UserDTO userDTO) {
     return ResponseEntity.ok(userService.registerUser(userDTO));
   }
   @PostMapping("/singin")
