@@ -24,16 +24,17 @@ projectData:
   generator:
     monsterCount: 5
     bufDifficulty: 100
-  addMonster:
+  monster:
     unique: Monster successfully added
     notUnique: Monster is not unique
   specification:
-    baseLegendary: legendary
+    maxChallenge: 155000
+    minChallenge: 10
     baseOwner: admin
   jwt:
     header: Authorization
-    secret: ${ENV_KEY:Pashax12}
+    secretKey: ${ENV_KEY:Pashax12}
     expiration: 60480
-  addUser:
+  user:
     unique: User successfully added
     notUnique: User is not unique

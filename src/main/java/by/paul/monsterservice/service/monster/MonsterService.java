@@ -2,7 +2,7 @@ package by.paul.monsterservice.service.monster;
 
 import by.paul.monsterservice.dto.DTOConverter;
 import by.paul.monsterservice.dto.GeneratedMonsterDTO;
-import by.paul.monsterservice.entity.EncounterSetup;
+import by.paul.monsterservice.entity.EncounterSettings;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearchCriteria;
 import by.paul.monsterservice.repository.MonsterRepository;
@@ -24,9 +24,9 @@ public class MonsterService {
   private final MonsterEncounterGenerator monsterEncounterGenerator;
   private final ExpCounter expCounter;
 
-  @Value("${projectData.addMonster.unique}")
+  @Value("${projectData.monster.unique}")
   private String uniqueResponse;
-  @Value("${projectData.addMonster.notUnique}")
+  @Value("${projectData.monster.notUnique}")
   private String unUniqueResponse;
   @Value("${projectData.generator.monsterCount}")
   private int monsterCount;
@@ -51,20 +51,20 @@ public class MonsterService {
     return monsterRepository.findByMonsterName(monsterName);
   }
 
-  private List<Monster> generateEncounter(EncounterSetup encounterSetup) {
+  private List<Monster> generateEncounter(EncounterSettings encounterSettings) {
     return monsterEncounterGenerator.monstersListGenerator(monsterRepository.
             findAllByMonsterChallengeBetweenOrderByMonsterId(
-                expCounter.getHoleFightExp(encounterSetup.getPlayersLevel(),
-                    encounterSetup.getDifficulty()) / monsterCount,
-                expCounter.getHoleFightExp(encounterSetup.getPlayersLevel(),
-                    encounterSetup.getDifficulty()) + bufDifficulty),
-        encounterSetup.isMixedTypes(), expCounter
-            .getHoleFightExp(encounterSetup.getPlayersLevel(), encounterSetup.getDifficulty())
+                expCounter.getHoleFightExp(encounterSettings.getPlayersLevel(),
+                    encounterSettings.getDifficulty()) / monsterCount,
+                expCounter.getHoleFightExp(encounterSettings.getPlayersLevel(),
+                    encounterSettings.getDifficulty()) + bufDifficulty),
+        encounterSettings.isMixedTypes(), expCounter
+            .getHoleFightExp(encounterSettings.getPlayersLevel(), encounterSettings.getDifficulty())
             + bufDifficulty);
   }
 
-  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterSetup encounterSetup) {
-    return convertedMonsterDTOS.convertMonsterToMonsterDto(generateEncounter(encounterSetup));
+  public List<GeneratedMonsterDTO> getGeneratedMonsters(EncounterSettings encounterSettings) {
+    return convertedMonsterDTOS.convertMonsterToMonsterDto(generateEncounter(encounterSettings));
   }
 
 

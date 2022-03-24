@@ -30,9 +30,9 @@ public class UserService implements UserDetailsService {
   private final AuthenticationManager authenticationManager;
   private final JwtTokenProvider jwtTokenProvider;
 
-  @Value("${projectData.addUser.unique}")
+  @Value("${projectData.user.unique}")
   private String uniqueResponse;
-  @Value("${projectData.addUser.notUnique}")
+  @Value("${projectData.user.notUnique}")
   private String nonUnique;
 
 

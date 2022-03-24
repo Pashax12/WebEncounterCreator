@@ -25,7 +25,7 @@ public class JwtTokenProvider {
 
   private final UserDetailsService userDetailsService;
 
-  @Value("${projectData.jwt.secret}")
+  @Value("${projectData.jwt.secretKey}")
   private String secretKey;
   @Value("${projectData.jwt.header}")
   private String authorizationHeader;
