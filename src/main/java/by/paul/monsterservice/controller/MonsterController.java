@@ -1,7 +1,7 @@
 package by.paul.monsterservice.controller;
 
 import by.paul.monsterservice.dto.GeneratedMonsterDTO;
-import by.paul.monsterservice.entity.EncounterSetup;
+import by.paul.monsterservice.entity.EncounterSettings;
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.SearchCriteria;
 import by.paul.monsterservice.service.monster.MonsterService;
@@ -27,16 +27,16 @@ public class MonsterController {
 
   private final MonsterService monsterService;
 
-  @PostMapping("/usermonster")
+  @PostMapping("/monster")
   @PreAuthorize("hasAuthority('access:write')")
   public ResponseEntity<Map<String, String>> addMonster(@Valid @RequestBody Monster monster) {
     return ResponseEntity.ok(monsterService.addMonster(monster));
   }
 
-  @PostMapping("/createencounter")
+  @PostMapping("/encounter-generator")
   public ResponseEntity<List<GeneratedMonsterDTO>> createEncounter(@Valid
-  @RequestBody EncounterSetup encounterSetup) {
-    return ResponseEntity.ok(monsterService.getGeneratedMonsters(encounterSetup));
+  @RequestBody EncounterSettings encounterSettings) {
+    return ResponseEntity.ok(monsterService.getGeneratedMonsters(encounterSettings));
   }
 
   @PostMapping("/monsterlibrary")
