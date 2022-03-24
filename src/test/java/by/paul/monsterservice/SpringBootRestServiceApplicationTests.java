@@ -3,7 +3,7 @@ package by.paul.monsterservice;
 
 import by.paul.monsterservice.config.ApplicationTestConfig;
 import by.paul.monsterservice.entity.DifficultyEnum;
-import by.paul.monsterservice.entity.EncounterSetup;
+import by.paul.monsterservice.entity.EncounterSettings;
 import by.paul.monsterservice.service.monster.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 @Import(ApplicationTestConfig.class)
 class SpringBootRestServiceApplicationTests {
 
-  private static EncounterSetup encounterSetup;
+  private static EncounterSettings encounterSettings;
 
   @Autowired
   private ExpCounter expCounter;
@@ -31,22 +31,22 @@ class SpringBootRestServiceApplicationTests {
     strings.add("5 level bard");
     strings.add("5 level bard");
     strings.add("5 level bard");
-    encounterSetup = new EncounterSetup();
-    encounterSetup.setPlayersLevel(strings);
+    encounterSettings = new EncounterSettings();
+    encounterSettings.setPlayersLevel(strings);
   }
 
 
   @Test
   void HardDifficultyWithPlayerExperienceCounter() {
     Assertions.assertEquals(expCounter
-            .getHoleFightExp(encounterSetup.getPlayersLevel(), String.valueOf(DifficultyEnum.HARD)),
+            .getHoleFightExp(encounterSettings.getPlayersLevel(), String.valueOf(DifficultyEnum.HARD)),
         3000);
   }
 
   @Test
   void EasyDifficultyWithPlayerExperienceCounter() {
     Assertions.assertEquals(expCounter
-            .getHoleFightExp(encounterSetup.getPlayersLevel(), String.valueOf(DifficultyEnum.EASY)),
+            .getHoleFightExp(encounterSettings.getPlayersLevel(), String.valueOf(DifficultyEnum.EASY)),
         1000);
   }
 
