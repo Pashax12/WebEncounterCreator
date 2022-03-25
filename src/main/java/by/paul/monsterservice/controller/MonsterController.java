@@ -43,8 +43,8 @@ public class MonsterController {
     return ResponseEntity.ok(monsterService.getMonsterByCriteria(searchCriteria));
   }
 
-  @GetMapping("/monsterlibrary/{path}")
-  public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String path) {
-    return ResponseEntity.ok(monsterService.getMonsterByName(path));
+  @GetMapping("/monsterlibrary/{name}")
+  public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String name) {
+    return ResponseEntity.ok(monsterService.getMonsterByName(name));
   }
 }
