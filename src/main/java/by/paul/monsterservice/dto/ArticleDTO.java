@@ -2,9 +2,6 @@ package by.paul.monsterservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.sql.Date;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.Data;
 
 @Data

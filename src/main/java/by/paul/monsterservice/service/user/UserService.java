@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,20 +47,22 @@ public class UserService implements UserDetailsService {
     if (!checkIsUniqueByEmail(user.getEmail())) {
       addUser(user);
       return user;
-    }else{
+    } else {
       throw new UserNotUniqueByUsernameException("Username not unique");
     }
 
   }
 
-  public  Map<String, String> authenticate(AuthenticationRequestDTO request) {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-      User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
-      String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
-      Map<String, String> response = new HashMap<>();
-      response.put("email", request.getEmail());
-      response.put("token", token);
-      return response;
+  public Map<String, String> authenticate(AuthenticationRequestDTO request) {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+    User user = userRepository.findByEmail(request.getEmail())
+        .orElseThrow(() -> new UsernameNotFoundException("User doesn't exists"));
+    String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
+    Map<String, String> response = new HashMap<>();
+    response.put("email", request.getEmail());
+    response.put("token", token);
+    return response;
   }
 
   public void logoutUser(HttpServletRequest request, HttpServletResponse response) {
