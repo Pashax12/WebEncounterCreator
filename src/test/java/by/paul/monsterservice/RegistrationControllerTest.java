@@ -1,7 +1,6 @@
 package by.paul.monsterservice;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,10 +28,9 @@ public class RegistrationControllerTest {
     this.mockMvc.perform(post("/auth/singup")
         .contentType(MediaType.APPLICATION_JSON)
         .content(userUnuique))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.status").value("User is not unique"))
+        .andExpect(status().isBadRequest())
         .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+            .contentTypeCompatibleWith(MediaType.TEXT_PLAIN_VALUE));
   }
 
   @Test
@@ -59,8 +57,6 @@ public class RegistrationControllerTest {
         .andExpect(status().is(200))
         .andExpect(jsonPath("$.email").value("admin@gmail.com"))
         .andExpect(content()
-            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON)).andDo(print());
-
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
   }
-
 }

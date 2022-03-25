@@ -35,13 +35,14 @@ public class MonsterControllerTest {
         + "  \"mixedTypes\": false\n"
         + "}";
 
-    this.mockMvc.perform(post("/createencounter")
+    this.mockMvc.perform(post("/encounter-generator")
         .contentType(MediaType.APPLICATION_JSON)
         .content(encounter))
         .andExpect(status().isOk())
         .andExpect(content()
             .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
   }
+
   @Test
   @SneakyThrows
   void createEncounterIfWithoutPlayersCharacters() {
@@ -52,7 +53,7 @@ public class MonsterControllerTest {
         + "  \"mixedTypes\": false\n"
         + "}";
 
-    this.mockMvc.perform(post("/createencounter")
+    this.mockMvc.perform(post("/encounter-generator")
         .contentType(MediaType.APPLICATION_JSON)
         .content(encounter))
         .andExpect(status().isOk())
@@ -93,13 +94,12 @@ public class MonsterControllerTest {
         + "    \"img_url\": \"https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/84/315/315/636252736680781387.jpeg\"\n"
         + "}";
 
-    this.mockMvc.perform(post("/usermonster")
+    this.mockMvc.perform(post("/monster")
         .contentType(MediaType.APPLICATION_JSON)
         .content(monster))
-        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.status").value("JWT token is expired or invalid"))
         .andExpect(status().isForbidden());
   }
+
   @Test
   @SneakyThrows
   void getMonstersBySearchCriteria() {
