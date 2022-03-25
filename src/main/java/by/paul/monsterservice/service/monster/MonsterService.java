@@ -35,11 +35,6 @@ public class MonsterService {
         monsterRepository.findAll(criteriaSpecificationImpl.searchSpecification(searchCriteria)));
   }
 
-  public List<GeneratedMonsterDTO> getAllAuthorMonster(String authorName) {
-    return convertedMonsterDTOS.convertMonsterToMonsterDto(
-        monsterRepository.findAllByMonsterOwnerIsContainingOrderByMonsterId(authorName));
-  }
-
   public Monster getMonsterByName(String monsterName) {
     if (monsterName.contains("_")) {
       monsterName = monsterName.replace("_", " ");
@@ -65,7 +60,7 @@ public class MonsterService {
 
 
   @SneakyThrows
-  public Monster addMonster(Monster monster) { ;
+  public Monster addMonster(Monster monster) {
     if (!checkIsMonsterUniqueByMonsterName(monster.getMonsterName())) {
       addHomebrewMonster(monster);
       return monster;

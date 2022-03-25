@@ -16,8 +16,6 @@ public interface MonsterRepository extends CrudRepository<Monster, Long>,
   List<Monster> findAllByMonsterChallengeBetweenOrderByMonsterId(
       int monsterChallenge, int monsterChallenge2);
 
-  List<Monster> findAllByMonsterOwnerIsContainingOrderByMonsterId(String monsterOwner);
-
   Monster findByMonsterName(String monsterName);
 
 }

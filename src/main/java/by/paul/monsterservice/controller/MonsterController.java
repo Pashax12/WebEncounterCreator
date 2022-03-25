@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -48,11 +47,4 @@ public class MonsterController {
   public ResponseEntity<Monster> getMonsterByName(@PathVariable @Valid @NotBlank String path) {
     return ResponseEntity.ok(monsterService.getMonsterByName(path));
   }
-
-  @GetMapping("/monsterlibrary")
-  public ResponseEntity<List<GeneratedMonsterDTO>> getAllAuthorMonster(@Valid @NotBlank
-  @RequestParam(value = "author", defaultValue = "admin") String authorName) {
-    return ResponseEntity.ok(monsterService.getAllAuthorMonster(authorName));
-  }
-
 }
