@@ -21,19 +21,8 @@ public class ExceptionAdvice {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(UsernameNotFoundException.class)
-  public ResponseEntity<String> handleUsernameNotFoundException(UsernameNotFoundException e) {
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(UserNotUniqueByUsernameException.class)
-  public ResponseEntity<String> handleUserNotUniqueByUsernameException(
-      UserNotUniqueByUsernameException e) {
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-  }
-  @ExceptionHandler(MonsterNotUniqueByNameException.class)
-  public ResponseEntity<String> handleMonsterNotUniqueByNameException(
-      MonsterNotUniqueByNameException e) {
+  @ExceptionHandler({UsernameNotFoundException.class, UserNotUniqueByUsernameException.class, MonsterNotUniqueByNameException.class})
+  public ResponseEntity<String> handleMultipleException(RuntimeException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
