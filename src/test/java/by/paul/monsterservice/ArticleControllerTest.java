@@ -23,24 +23,23 @@ public class ArticleControllerTest {
 
   @Test
   @SneakyThrows
-  void getMonsters() {
+  void getLastFiveArticles() {
     this.mockMvc.perform(get("/article")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-        .andExpect(jsonPath("$.[0].title").value("Improvisation in D&D for New Dungeon Masters"))
         .andDo(print());
   }
 
   @Test
   @SneakyThrows
-  void getArticle() {
+  void getArticleByIndexAndCheckValue() {
     this.mockMvc.perform(get("/article/2")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
         .andExpect(jsonPath("$.articleId").value("2"))
+        .andExpect(jsonPath("$.title").value("DM's Guide For Building Combat Encounters"))
         .andDo(print());
   }
-
 }

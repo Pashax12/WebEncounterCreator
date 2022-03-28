@@ -24,7 +24,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getEncounter() {
+  void createEncounterIfAllParamsAllowed() {
     String encounter = "{\n"
         + "  \"monsterOwner\":\"admin\",\n"
         + "  \"difficulty\": \"HARD\",\n"
@@ -35,7 +35,7 @@ public class MonsterControllerTest {
         + "  \"mixedTypes\": false\n"
         + "}";
 
-    this.mockMvc.perform(post("/createencounter")
+    this.mockMvc.perform(post("/encounter-generator")
         .contentType(MediaType.APPLICATION_JSON)
         .content(encounter))
         .andExpect(status().isOk())
@@ -45,8 +45,26 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void addMonster() {
-    String monsters = "{\n"
+  void createEncounterIfWithoutPlayersCharacters() {
+    String encounter = "{\n"
+        + "  \"monsterOwner\":\"admin\",\n"
+        + "  \"difficulty\": \"HARD\",\n"
+        + "  \"playersLevel\": [],\n"
+        + "  \"mixedTypes\": false\n"
+        + "}";
+
+    this.mockMvc.perform(post("/encounter-generator")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(encounter))
+        .andExpect(status().isOk())
+        .andExpect(content()
+            .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+  }
+
+  @Test
+  @SneakyThrows
+  void forbiddenAddMonster() {
+    String monster = "{\n"
         + "    \"monsterOwner\": \"Paul\",\n"
         + "    \"name\": \"not Large elemental\",\n"
         + "    \"meta\": \"Tiny elemental, neutral\",\n"
@@ -76,14 +94,15 @@ public class MonsterControllerTest {
         + "    \"img_url\": \"https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/84/315/315/636252736680781387.jpeg\"\n"
         + "}";
 
-    this.mockMvc.perform(post("/usermonster")
+    this.mockMvc.perform(post("/monster")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(monsters))
+        .content(monster))
         .andExpect(status().isForbidden());
   }
+
   @Test
   @SneakyThrows
-  void searchCriteria() {
+  void getMonstersBySearchCriteria() {
     String searchCriteria = "{\n"
         + "    \"monsterType\":\"\",\n"
         + "    \"monsterSize\":\"\",\n"
@@ -105,7 +124,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getMonsterName() {
+  void getMonsterByName() {
     this.mockMvc.perform(get("/monsterlibrary/Ape")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -116,7 +135,7 @@ public class MonsterControllerTest {
 
   @Test
   @SneakyThrows
-  void getMonsterAuthor() {
+  void getMonsterByAuthor() {
     this.mockMvc.perform(get("/monsterlibrary")
         .param("author", "admin")
         .contentType(MediaType.APPLICATION_JSON))

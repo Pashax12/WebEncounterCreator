@@ -2,7 +2,7 @@ package by.paul.monsterservice.repository.specification;
 
 import by.paul.monsterservice.entity.Monster;
 import by.paul.monsterservice.entity.Monster_;
-import by.paul.monsterservice.entity.SearcherCriteria;
+import by.paul.monsterservice.entity.SearchCriteria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
   private int minChallenge;
 
 
-  public Specification<Monster> searchSpecification(SearcherCriteria criteria) {
+  public Specification<Monster> searchSpecification(SearchCriteria criteria) {
 
     return (root, query, criteriaBuilder) -> {
 
@@ -53,7 +53,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     };
   }
 
-  private Predicate checkMonsterType(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkMonsterType(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
     if (criteria.getMonsterType() != null && !criteria.getMonsterType().equals("")) {
       return criteriaBuilder
@@ -62,7 +62,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkMonsterSize(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkMonsterSize(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
     if (criteria.getMonsterSize() != null && !criteria.getMonsterSize().equals("")) {
       return criteriaBuilder
@@ -71,7 +71,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkMonsterOutlook(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkMonsterOutlook(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
     if (criteria.getMonsterOutlook() != null && !criteria.getMonsterOutlook().equals("")) {
       return criteriaBuilder
@@ -80,7 +80,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkMonsterMinChallenge(SearcherCriteria criteria,
+  private Predicate checkMonsterMinChallenge(SearchCriteria criteria,
       CriteriaBuilder criteriaBuilder, Root root) {
     if (criteria.getMinMonsterChallenge() >= minChallenge) {
       return criteriaBuilder.greaterThanOrEqualTo(root.get(Monster_.MONSTER_CHALLENGE),
@@ -89,7 +89,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkMonsterMaxChallenge(SearcherCriteria criteria,
+  private Predicate checkMonsterMaxChallenge(SearchCriteria criteria,
       CriteriaBuilder criteriaBuilder, Root root) {
     if (criteria.getMaxMonsterChallenge() <= maxChallenge
         && criteria.getMaxMonsterChallenge() > minChallenge) {
@@ -101,7 +101,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkSource(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkSource(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
     if (!criteria.isSource()) {
       return criteriaBuilder.equal(root.get(Monster_.MONSTER_OWNER), baseOwner);
@@ -109,7 +109,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkLegendaryAction(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkLegendaryAction(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
     if (criteria.isLegendaryAction()) {
       return criteriaBuilder.isNotNull(root.get(Monster_.MONSTER_LEGENDARY_ACTIONS));
@@ -117,7 +117,7 @@ public class CriteriaSpecificationImpl implements CriteriaSpecification {
     return null;
   }
 
-  private Predicate checkSpecialSkills(SearcherCriteria criteria, CriteriaBuilder criteriaBuilder,
+  private Predicate checkSpecialSkills(SearchCriteria criteria, CriteriaBuilder criteriaBuilder,
       Root root) {
 
     if (criteria.isSpecialSkills()) {

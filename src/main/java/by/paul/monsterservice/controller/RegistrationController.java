@@ -2,7 +2,8 @@ package by.paul.monsterservice.controller;
 
 import by.paul.monsterservice.dto.AuthenticationRequestDTO;
 import by.paul.monsterservice.dto.UserDTO;
-import by.paul.monsterservice.service.registration.RegistrationService;
+import by.paul.monsterservice.entity.User;
+import by.paul.monsterservice.service.user.UserService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,18 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class RegistrationController {
 
-  private final RegistrationService registrationService;
+  private final UserService userService;
   @PostMapping("/singup")
-  public ResponseEntity<String> addUser(@Valid @RequestBody UserDTO userDTO) {
-    return ResponseEntity.ok(registrationService.registerUser(userDTO));
+  public ResponseEntity<User> addUser(@Valid @RequestBody UserDTO userDTO) {
+    return ResponseEntity.ok(userService.registerUser(userDTO));
   }
   @PostMapping("/singin")
   public ResponseEntity<Map<String, String>> authenticate(@Valid @RequestBody AuthenticationRequestDTO authenticationRequestDTO) {
-    return ResponseEntity.ok(registrationService.authenticate(authenticationRequestDTO));
+    return ResponseEntity.ok(userService.authenticate(authenticationRequestDTO));
   }
   @PostMapping("/logout")
   public void logout(HttpServletRequest request, HttpServletResponse response) {
-    registrationService.logoutUser(request, response);
+    userService.logoutUser(request, response);
 
   }
 

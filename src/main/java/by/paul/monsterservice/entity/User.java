@@ -1,6 +1,5 @@
 package by.paul.monsterservice.entity;
 
-import by.paul.monsterservice.entity.Role;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

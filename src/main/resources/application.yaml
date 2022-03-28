@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/EncounterBot
+    username: ${ENV_USERNAME:postgres}
+    password: ${ENV_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    open-in-view: true
+  main:
+    allow-circular-references: true
+server:
+  error:
+    include-message: always
+    include-exception: true
+    whitelabel:
+      enabled: true
+    include-stacktrace: always
+    include-binding-errors: always
+projectData:
+  generator:
+    monsterCount: 5
+    bufDifficulty: 100
+  specification:
+    maxChallenge: 155000
+    minChallenge: 10
+    baseOwner: admin
+  jwt:
+    header: Authorization
+    secretKey: ${ENV_KEY:Pashax12}
+    expiration: 60480

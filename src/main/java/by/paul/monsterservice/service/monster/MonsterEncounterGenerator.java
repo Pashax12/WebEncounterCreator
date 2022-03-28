@@ -1,4 +1,4 @@
-package by.paul.monsterservice.service.monsterservice;
+package by.paul.monsterservice.service.monster;
 
 
 import by.paul.monsterservice.entity.Monster;

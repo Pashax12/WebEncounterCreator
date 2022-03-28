@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,15 +25,15 @@ public class JwtTokenProvider {
 
   private final UserDetailsService userDetailsService;
 
-  @Value("${projectData.jwt.secret}")
+  @Value("${projectData.jwt.secretKey}")
   private String secretKey;
   @Value("${projectData.jwt.header}")
   private String authorizationHeader;
   @Value("${projectData.jwt.expiration}")
   private long validityInMilliseconds;
 
-  public JwtTokenProvider(
-      @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
+  public JwtTokenProvider(@Lazy
+      @Qualifier("registrationService") UserDetailsService userDetailsService) {
     this.userDetailsService = userDetailsService;
   }
 

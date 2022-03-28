@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ArticleDTO {
 
+  @JsonProperty("articleId")
+  private Long articleId;
   @JsonProperty("title")
   private String title;
   @JsonProperty("introduction")

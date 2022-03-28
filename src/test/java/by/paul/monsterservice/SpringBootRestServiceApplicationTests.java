@@ -1,26 +1,27 @@
 package by.paul.monsterservice;
 
 
-import by.paul.monsterservice.entity.EncounterBuilder;
-import by.paul.monsterservice.service.monsterservice.ExpCounter;
+import by.paul.monsterservice.config.ApplicationTestConfig;
+import by.paul.monsterservice.entity.DifficultyEnum;
+import by.paul.monsterservice.entity.EncounterSettings;
+import by.paul.monsterservice.service.monster.ExpCounter;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.context.annotation.Import;
 
 @SpringBootTest(classes = SpringBootRestServiceApplicationTests.class)
-@EnableConfigurationProperties
+@Import(ApplicationTestConfig.class)
 class SpringBootRestServiceApplicationTests {
 
-  private static EncounterBuilder encounterBuilder;
-  @Mock
-  private ExpCounter expCounter;
+  private static EncounterSettings encounterSettings;
 
+  @Autowired
+  private ExpCounter expCounter;
 
 
   @BeforeAll
@@ -30,23 +31,29 @@ class SpringBootRestServiceApplicationTests {
     strings.add("5 level bard");
     strings.add("5 level bard");
     strings.add("5 level bard");
-    encounterBuilder = new EncounterBuilder();
-    encounterBuilder.setPlayersLevel(strings);
+    encounterSettings = new EncounterSettings();
+    encounterSettings.setPlayersLevel(strings);
   }
 
 
   @Test
-  void expCounter() {
-    Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "HARD"))
-        .thenReturn(3000);
-    Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "EASY"))
-        .thenReturn(1000);
-    Mockito.when(expCounter
-        .getHoleFightExp(encounterBuilder.getPlayersLevel(), "DEADLY"))
-        .thenReturn(4400);
-    Mockito.when(expCounter
-        .getHoleFightExp(null, "HARD")).thenReturn(100);
+  void HardDifficultyWithPlayerExperienceCounter() {
+    Assertions.assertEquals(expCounter
+            .getHoleFightExp(encounterSettings.getPlayersLevel(), String.valueOf(DifficultyEnum.HARD)),
+        3000);
   }
+
+  @Test
+  void EasyDifficultyWithPlayerExperienceCounter() {
+    Assertions.assertEquals(expCounter
+            .getHoleFightExp(encounterSettings.getPlayersLevel(), String.valueOf(DifficultyEnum.EASY)),
+        1000);
+  }
+
+  @Test
+  void EasyDifficultyWithoutPlayerExperienceCounter() {
+    Assertions.assertEquals(expCounter
+        .getHoleFightExp(new ArrayList<>(), String.valueOf(DifficultyEnum.EASY)), 0);
+  }
+
 }
